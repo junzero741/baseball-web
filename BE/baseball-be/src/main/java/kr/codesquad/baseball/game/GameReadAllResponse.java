@@ -1,5 +1,7 @@
 package kr.codesquad.baseball.game;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class GameReadAllResponse {
     private Team homeTeam;
     private Team awayTeam;
@@ -17,6 +19,7 @@ public class GameReadAllResponse {
         return awayTeam;
     }
 
+    @Schema(name = "Team-GameReadAllResponse")
     public static class Team {
         private long id;
         private String name;
