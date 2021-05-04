@@ -11,6 +11,11 @@ public class SampleDataFactory {
 
     public static List<GameReadAllResponse> gameReadAllResponses() {
         return Arrays.asList(
+                new GameReadAllResponse(new GameReadAllResponse.Team(1L, "Captain"), new GameReadAllResponse.Team(2L, "Marvel")),
+                new GameReadAllResponse(new GameReadAllResponse.Team(1L, "Captain"), new GameReadAllResponse.Team(2L, "Marvel")),
+                new GameReadAllResponse(new GameReadAllResponse.Team(1L, "Captain"), new GameReadAllResponse.Team(2L, "Marvel")),
+                new GameReadAllResponse(new GameReadAllResponse.Team(1L, "Captain"), new GameReadAllResponse.Team(2L, "Marvel")),
+                new GameReadAllResponse(new GameReadAllResponse.Team(1L, "Captain"), new GameReadAllResponse.Team(2L, "Marvel")),
                 new GameReadAllResponse(new GameReadAllResponse.Team(1L, "Captain"), new GameReadAllResponse.Team(2L, "Marvel"))
         );
     }
