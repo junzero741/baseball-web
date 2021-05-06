@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class GameReadAllResponse {
     private long id;
+    // 야구는 홈팀이 후공이라고 한다.
     private Team homeTeam;
     private Team awayTeam;
 
@@ -11,10 +12,6 @@ public class GameReadAllResponse {
         this.id = id;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public Team getHomeTeam() {
