@@ -1,7 +1,9 @@
 package kr.codesquad.baseball.utils;
 
-import kr.codesquad.baseball.inning.BaseState;
 import kr.codesquad.baseball.game.GameReadAllResponse;
+import kr.codesquad.baseball.game.LineUp;
+import kr.codesquad.baseball.game.PlayerStatus;
+import kr.codesquad.baseball.inning.BaseState;
 import kr.codesquad.baseball.inning.HitterRecord;
 import kr.codesquad.baseball.inning.InningDTO;
 
@@ -51,6 +53,115 @@ public class SampleDataFactory {
                                 "추신수",
                                 Arrays.asList("S", "S", "B", "S"),
                                 true
+                        )
+                )
+        );
+    }
+
+    public static LineUp lineUp() {
+        return new LineUp(
+                new LineUp.Team(
+                        1L,
+                        "Captain",
+                        Arrays.asList(
+                                new PlayerStatus(
+                                        1L,
+                                        "김광진",
+                                        1,
+                                        1
+                                ), new PlayerStatus(
+                                        2L,
+                                        "이동규",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        3L,
+                                        "김진수",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        4L,
+                                        "박영권",
+                                        1,
+                                        1
+                                ), new PlayerStatus(
+                                        5L,
+                                        "추신수",
+                                        1,
+                                        1
+                                ), new PlayerStatus(
+                                        6L,
+                                        "이용대",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        7L,
+                                        "류현진",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        8L,
+                                        "최동수",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        9L,
+                                        "한양범",
+                                        1,
+                                        1
+                                )
+                        )
+                ),
+                new LineUp.Team(
+                        2L,
+                        "Marvel",
+                        Arrays.asList(
+                                new PlayerStatus(
+                                        10L,
+                                        "김광진",
+                                        1,
+                                        1
+                                ), new PlayerStatus(
+                                        11L,
+                                        "이동규",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        12L,
+                                        "김진수",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        13L,
+                                        "박영권",
+                                        1,
+                                        1
+                                ), new PlayerStatus(
+                                        14L,
+                                        "추신수",
+                                        1,
+                                        1
+                                ), new PlayerStatus(
+                                        15L,
+                                        "이용대",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        16L,
+                                        "류현진",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        17L,
+                                        "최동원",
+                                        1,
+                                        0
+                                ), new PlayerStatus(
+                                        18L,
+                                        "한양범",
+                                        1,
+                                        1
+                                )
                         )
                 )
         );
