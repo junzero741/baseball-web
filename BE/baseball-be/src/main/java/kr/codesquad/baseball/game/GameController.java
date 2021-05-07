@@ -20,4 +20,9 @@ public class GameController {
     public LineUp lineUp(@PathVariable long id) {
         return SampleDataFactory.lineUp();
     }
+
+    @GetMapping("/games/{id}/scores")
+    public GameScores gameScores(@PathVariable long id) {
+        return SampleDataFactory.gameScores();
+    }
 }
