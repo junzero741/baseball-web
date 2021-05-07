@@ -1,6 +1,7 @@
 package kr.codesquad.baseball.utils;
 
 import kr.codesquad.baseball.game.GameReadAllResponse;
+import kr.codesquad.baseball.game.GameScores;
 import kr.codesquad.baseball.game.LineUp;
 import kr.codesquad.baseball.game.PlayerStatus;
 import kr.codesquad.baseball.inning.BaseState;
@@ -164,6 +165,13 @@ public class SampleDataFactory {
                                 )
                         )
                 )
+        );
+    }
+
+    public static GameScores gameScores() {
+        return new GameScores(
+                Arrays.asList(1, 2, 2),
+                Arrays.asList(1, 0, 0, 0)
         );
     }
 }
