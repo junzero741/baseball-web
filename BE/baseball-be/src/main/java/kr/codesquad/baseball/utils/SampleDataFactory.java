@@ -170,8 +170,16 @@ public class SampleDataFactory {
 
     public static GameScores gameScores() {
         return new GameScores(
-                Arrays.asList(1, 2, 2),
-                Arrays.asList(1, 0, 0, 0)
+                new GameScores.Team(
+                        1L,
+                        "Captain",
+                        Arrays.asList(1, 2, 2)
+                ),
+                new GameScores.Team(
+                        2L,
+                        "Marvel",
+                        Arrays.asList(1, 0, 0, 0)
+                )
         );
     }
 }
