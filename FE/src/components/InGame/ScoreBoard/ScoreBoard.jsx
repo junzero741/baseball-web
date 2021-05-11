@@ -4,7 +4,7 @@ import Table from "./Table";
 import useFetch from "../../../utils/useFetch/useFetch";
 
 const ScoreBoard = ({ gameId, slide, toggle, isDark, setDark }) => {
-	const { data } = useFetch(`https://baseball-ahpuh.herokuapp.com/games/${gameId}/scores`, { awayTeam: { name: "", scores: [] }, homeTeam: { name: "", scores: [] } });
+	const { data } = useFetch({ url: `https://baseball-ahpuh.herokuapp.com/games/${gameId}/scores`, initialValue: { awayTeam: { name: "", scores: [] }, homeTeam: { name: "", scores: [] } } });
 
 	const slideScoreBoard = async () => {
 		if (isDark) return;
