@@ -1,6 +1,6 @@
 package kr.codesquad.baseball.team;
 
-import kr.codesquad.baseball.game.PlayerStatus;
+import kr.codesquad.baseball.game.controller.PlayerStatus;
 
 import java.util.List;
 

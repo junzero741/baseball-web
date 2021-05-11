@@ -1,4 +1,4 @@
-package kr.codesquad.baseball.game;
+package kr.codesquad.baseball.game.controller;
 
 import kr.codesquad.baseball.team.TeamDTO;
 
