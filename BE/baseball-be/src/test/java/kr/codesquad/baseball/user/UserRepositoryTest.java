@@ -16,7 +16,7 @@ class UserRepositoryTest {
 
     @Test
     void findUser() {
-        assertThat(userRepository.findOneBy(1L).getName())
+        assertThat(userRepository.findUserById(1L).getName())
                 .isEqualTo("test");
     }
 
@@ -26,7 +26,7 @@ class UserRepositoryTest {
 
         long id = userRepository.save(user).getId();
 
-        User result = userRepository.findOneBy(id);
+        User result = userRepository.findUserById(id);
 
         assertThat(result.getName())
                 .isEqualTo(user.getName());
