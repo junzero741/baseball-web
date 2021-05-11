@@ -16,11 +16,11 @@ const InGame = () => {
 		// 그때를 대비해 default parameter로 useEffect때는 결과만 받아오도록 하고
 		// 인자로 {result:ball} 따위를 POST나 PUT할 수 있게 만들어주자
 		try {
-			const response = await fetch(`https://baseball-ahpuh.herokuapp.com/games/${gameId}?teamId=${teamId}`)
-			const json = await response.json()
-			setData(()=>json)
+			const response = await fetch(`https://baseball-ahpuh.herokuapp.com/games/${gameId}?teamId=${teamId}`);
+			const json = await response.json();
+			setData(() => json);
 		} catch (error) {
-			console.log("fetch error in InGame : ",error)
+			console.log("fetch error in InGame : ", error);
 		}
 	};
 	useEffect(() => reloadData(), []);
