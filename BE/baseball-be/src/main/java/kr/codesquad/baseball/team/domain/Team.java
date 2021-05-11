@@ -1,6 +1,6 @@
-package kr.codesquad.baseball.team.repository;
+package kr.codesquad.baseball.team.domain;
 
-import kr.codesquad.baseball.player.repository.Player;
+import kr.codesquad.baseball.player.domain.Player;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 

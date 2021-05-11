@@ -1,7 +1,7 @@
-package kr.codesquad.baseball.team.repository;
+package kr.codesquad.baseball.team.domain;
 
-import kr.codesquad.baseball.player.repository.Player;
-import kr.codesquad.baseball.player.repository.PlayerRepository;
+import kr.codesquad.baseball.player.domain.Player;
+import kr.codesquad.baseball.player.domain.PlayerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -8,7 +8,7 @@ import kr.codesquad.baseball.inning.BaseState;
 import kr.codesquad.baseball.inning.HitterRecord;
 import kr.codesquad.baseball.inning.InningDTO;
 import kr.codesquad.baseball.player.PlayerDTO;
-import kr.codesquad.baseball.player.repository.Player;
+import kr.codesquad.baseball.player.domain.Player;
 import kr.codesquad.baseball.team.TeamDTO;
 
 import java.util.Arrays;
