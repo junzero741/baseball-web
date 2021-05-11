@@ -8,6 +8,7 @@ import kr.codesquad.baseball.inning.BaseState;
 import kr.codesquad.baseball.inning.HitterRecord;
 import kr.codesquad.baseball.inning.InningDTO;
 import kr.codesquad.baseball.player.PlayerDTO;
+import kr.codesquad.baseball.player.repository.Player;
 import kr.codesquad.baseball.team.TeamDTO;
 
 import java.util.Arrays;
@@ -182,6 +183,20 @@ public class SampleDataFactory {
                         "Marvel",
                         Arrays.asList(1, 0, 0, 0)
                 )
+        );
+    }
+
+    public static List<Player> players() {
+        return Arrays.asList(
+                new Player("김광진"),
+                new Player("이동규"),
+                new Player("김진수"),
+                new Player("박영권"),
+                new Player("추신수"),
+                new Player("이용대"),
+                new Player("류현진"),
+                new Player("최동수"),
+                new Player("한양범")
         );
     }
 }
