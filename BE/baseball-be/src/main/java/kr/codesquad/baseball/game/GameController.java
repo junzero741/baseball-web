@@ -12,17 +12,17 @@ import java.util.List;
 @CrossOrigin
 public class GameController {
     @GetMapping("/games")
-    public List<GameReadAllResponse> readAll() {
+    public List<GameDTO> readAll() {
         return SampleDataFactory.gameReadAllResponses();
     }
 
     @GetMapping("/games/{id}/lineup")
-    public LineUp lineUp(@PathVariable long id) {
+    public LineUpDTO lineUp(@PathVariable long id) {
         return SampleDataFactory.lineUp();
     }
 
     @GetMapping("/games/{id}/scores")
-    public GameScores gameScores(@PathVariable long id) {
+    public GameScoresDTO gameScores(@PathVariable long id) {
         return SampleDataFactory.gameScores();
     }
 }

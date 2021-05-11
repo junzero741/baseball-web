@@ -1,12 +1,14 @@
 package kr.codesquad.baseball.utils;
 
-import kr.codesquad.baseball.game.GameReadAllResponse;
-import kr.codesquad.baseball.game.GameScores;
-import kr.codesquad.baseball.game.LineUp;
+import kr.codesquad.baseball.game.GameDTO;
+import kr.codesquad.baseball.game.GameScoresDTO;
+import kr.codesquad.baseball.game.LineUpDTO;
 import kr.codesquad.baseball.game.PlayerStatus;
 import kr.codesquad.baseball.inning.BaseState;
 import kr.codesquad.baseball.inning.HitterRecord;
 import kr.codesquad.baseball.inning.InningDTO;
+import kr.codesquad.baseball.player.PlayerDTO;
+import kr.codesquad.baseball.team.TeamDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,14 +17,14 @@ public class SampleDataFactory {
     private SampleDataFactory() {
     }
 
-    public static List<GameReadAllResponse> gameReadAllResponses() {
+    public static List<GameDTO> gameReadAllResponses() {
         return Arrays.asList(
-                new GameReadAllResponse(1L, new GameReadAllResponse.Team(1L, "Captain"), new GameReadAllResponse.Team(2L, "Marvel")),
-                new GameReadAllResponse(2L, new GameReadAllResponse.Team(3L, "Twins"), new GameReadAllResponse.Team(4L, "Tigers")),
-                new GameReadAllResponse(3L, new GameReadAllResponse.Team(5L, "Rockets"), new GameReadAllResponse.Team(6L, "Dodgers")),
-                new GameReadAllResponse(4L, new GameReadAllResponse.Team(7L, "United"), new GameReadAllResponse.Team(8L, "City")),
-                new GameReadAllResponse(5L, new GameReadAllResponse.Team(9L, "Wolves"), new GameReadAllResponse.Team(10L, "Dragons")),
-                new GameReadAllResponse(6L, new GameReadAllResponse.Team(11L, "Reds"), new GameReadAllResponse.Team(12L, "Lions"))
+                new GameDTO(1L, new TeamDTO(1L, "Captain"), new TeamDTO(2L, "Marvel")),
+                new GameDTO(2L, new TeamDTO(3L, "Twins"), new TeamDTO(4L, "Tigers")),
+                new GameDTO(3L, new TeamDTO(5L, "Rockets"), new TeamDTO(6L, "Dodgers")),
+                new GameDTO(4L, new TeamDTO(7L, "United"), new TeamDTO(8L, "City")),
+                new GameDTO(5L, new TeamDTO(9L, "Wolves"), new TeamDTO(10L, "Dragons")),
+                new GameDTO(6L, new TeamDTO(11L, "Reds"), new TeamDTO(12L, "Lions"))
         );
     }
 
@@ -30,11 +32,11 @@ public class SampleDataFactory {
         return new InningDTO(
                 2,
                 "TOP",
-                new InningDTO.Team(1L, "Captain", 1),
-                new InningDTO.Team(2L, "Marvel", 5),
+                new TeamDTO.WithScore(1L, "Captain", 1),
+                new TeamDTO.WithScore(2L, "Marvel", 5),
                 new BaseState(false, true, true),
-                new InningDTO.Pitcher(8L, "최동원", 39),
-                new InningDTO.Hitter(16L, 7, "류현진", 1, 0),
+                new PlayerDTO.Pitcher(8L, "최동원", 39),
+                new PlayerDTO.Hitter(16L, "류현진", 7, 1, 0),
                 Arrays.asList(
                         new HitterRecord(
                                 16L,
@@ -59,9 +61,9 @@ public class SampleDataFactory {
         );
     }
 
-    public static LineUp lineUp() {
-        return new LineUp(
-                new LineUp.Team(
+    public static LineUpDTO lineUp() {
+        return new LineUpDTO(
+                new TeamDTO.WithPlayerStatus(
                         1L,
                         "Captain",
                         Arrays.asList(
@@ -113,7 +115,7 @@ public class SampleDataFactory {
                                 )
                         )
                 ),
-                new LineUp.Team(
+                new TeamDTO.WithPlayerStatus(
                         2L,
                         "Marvel",
                         Arrays.asList(
@@ -168,14 +170,14 @@ public class SampleDataFactory {
         );
     }
 
-    public static GameScores gameScores() {
-        return new GameScores(
-                new GameScores.Team(
+    public static GameScoresDTO gameScores() {
+        return new GameScoresDTO(
+                new TeamDTO.WithScores(
                         1L,
                         "Captain",
                         Arrays.asList(1, 2, 2)
                 ),
-                new GameScores.Team(
+                new TeamDTO.WithScores(
                         2L,
                         "Marvel",
                         Arrays.asList(1, 0, 0, 0)
