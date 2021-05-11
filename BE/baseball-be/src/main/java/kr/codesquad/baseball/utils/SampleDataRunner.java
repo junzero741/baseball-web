@@ -1,9 +1,9 @@
 package kr.codesquad.baseball.utils;
 
-import kr.codesquad.baseball.player.repository.Player;
-import kr.codesquad.baseball.player.repository.PlayerRepository;
-import kr.codesquad.baseball.team.repository.Team;
-import kr.codesquad.baseball.team.repository.TeamRepository;
+import kr.codesquad.baseball.player.domain.Player;
+import kr.codesquad.baseball.player.domain.PlayerRepository;
+import kr.codesquad.baseball.team.domain.Team;
+import kr.codesquad.baseball.team.domain.TeamRepository;
 import kr.codesquad.baseball.user.User;
 import kr.codesquad.baseball.user.UserRepository;
 import org.springframework.boot.ApplicationRunner;

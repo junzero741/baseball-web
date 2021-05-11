@@ -1,4 +1,4 @@
-package kr.codesquad.baseball.player.repository;
+package kr.codesquad.baseball.player.domain;
 
 import kr.codesquad.baseball.utils.SampleDataFactory;
 import org.junit.jupiter.api.Test;
