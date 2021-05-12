@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -57,5 +59,15 @@ class InningRepositoryTest {
 
         inningRepository.save(firstInning.updateScore(2));
         assertThat(inningRepository.findScoreBy(1, 1L, 1L)).isEqualTo(2);
+    }
+
+    @Test
+    void findAllScoresBy() {
+        inningRepository.save(new GameInning(1, 1L, 1L).updateScore(1));
+        inningRepository.save(new GameInning(2, 1L, 1L).updateScore(3));
+        inningRepository.save(new GameInning(3, 1L, 1L).updateScore(2));
+        
+        assertThat(inningRepository.findAllScoresBy(1L, 1L))
+                .isEqualTo(Arrays.asList(1, 3, 2));
     }
 }
