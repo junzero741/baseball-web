@@ -127,24 +127,23 @@ CREATE TABLE IF NOT EXISTS `baseball`.`plate_appearance` (
 DROP TABLE IF EXISTS `baseball`.`pitch` ;
 
 CREATE TABLE IF NOT EXISTS `baseball`.`pitch` (
+                                                  `id` INT NOT NULL AUTO_INCREMENT,
                                                   `pitch_number` INT NOT NULL,
                                                   `pitcher_id` INT NOT NULL,
+                                                  `plate_appearance_id` INT NOT NULL,
                                                   `result` VARCHAR(45) NULL,
-    `plate_appearance_number` INT NOT NULL,
-    `game_id` INT NOT NULL,
-    `inning` INT NOT NULL,
-    `team_id` INT NOT NULL,
-    PRIMARY KEY (`pitch_number`, `plate_appearance_number`, `game_id`, `inning`, `team_id`),
+    PRIMARY KEY (`id`),
     INDEX `fk_pitch_player1_idx` (`pitcher_id` ASC),
-    INDEX `fk_pitch_plate_appearance1_idx` (`plate_appearance_number` ASC, `game_id` ASC, `inning` ASC, `team_id` ASC),
+    INDEX `fk_pitch_plate_appearance1_idx` (`plate_appearance_id` ASC),
+    UNIQUE INDEX `pitch_number__pitcher_id_plate_appearance_id_UNIQUE` (`pitch_number` ASC, `pitcher_id` ASC, `plate_appearance_id` ASC),
     CONSTRAINT `fk_pitch_player1`
     FOREIGN KEY (`pitcher_id`)
     REFERENCES `baseball`.`player` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
     CONSTRAINT `fk_pitch_plate_appearance1`
-    FOREIGN KEY (`plate_appearance_number`)
-    REFERENCES `baseball`.`plate_appearance` (`plate_appearance_number`)
+    FOREIGN KEY (`plate_appearance_id`)
+    REFERENCES `baseball`.`plate_appearance` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB;

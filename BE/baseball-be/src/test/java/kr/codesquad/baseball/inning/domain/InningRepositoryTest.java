@@ -47,4 +47,17 @@ class InningRepositoryTest {
 
         System.out.println(inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc(1L, 1L));
     }
+
+    @Test
+    void savePitch() {
+        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L));
+
+        firstInning.addNewPlateAppearanceBy(1L);
+
+        inningRepository.save(firstInning);
+        inningRepository.save(firstInning.pitch(1L, PitchResult.STRIKE));
+        inningRepository.save(firstInning.pitch(1L, PitchResult.STRIKE));
+
+        System.out.println(inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc(1L, 1L));
+    }
 }
