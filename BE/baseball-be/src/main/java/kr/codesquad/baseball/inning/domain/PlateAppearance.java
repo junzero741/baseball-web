@@ -1,4 +1,4 @@
-package kr.codesquad.baseball.inning;
+package kr.codesquad.baseball.inning.domain;
 
 import org.springframework.data.annotation.Id;
 
