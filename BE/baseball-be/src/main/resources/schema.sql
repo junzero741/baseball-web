@@ -204,37 +204,6 @@ CREATE TABLE IF NOT EXISTS `baseball`.`game_lineup` (
 
 
 -- -----------------------------------------------------
--- Table `baseball`.`game_has_team`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `baseball`.`game_has_team` ;
-
-CREATE TABLE IF NOT EXISTS `baseball`.`game_has_team` (
-                                                          `game_id` INT NOT NULL,
-                                                          `home_team_id` INT NOT NULL,
-                                                          `away_team_id` INT NOT NULL,
-                                                          PRIMARY KEY (`game_id`),
-    INDEX `fk_game_has_team_game1_idx` (`game_id` ASC),
-    INDEX `fk_game_has_team_team1_idx` (`home_team_id` ASC),
-    INDEX `fk_game_has_team_team2_idx` (`away_team_id` ASC),
-    CONSTRAINT `fk_game_has_team_game1`
-    FOREIGN KEY (`game_id`)
-    REFERENCES `baseball`.`game` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_game_has_team_team1`
-    FOREIGN KEY (`home_team_id`)
-    REFERENCES `baseball`.`team` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_game_has_team_team2`
-    FOREIGN KEY (`away_team_id`)
-    REFERENCES `baseball`.`team` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `baseball`.`team_has_player`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `baseball`.`team_has_player` ;
@@ -253,6 +222,36 @@ CREATE TABLE IF NOT EXISTS `baseball`.`team_has_player` (
     CONSTRAINT `fk_team_has_player_player1`
     FOREIGN KEY (`player_id`)
     REFERENCES `baseball`.`player` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `baseball`.`team_participate_game`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `baseball`.`team_participate_game` ;
+
+CREATE TABLE IF NOT EXISTS `baseball`.`team_participate_game` (
+                                                                  `game_id` INT NOT NULL,
+                                                                  `home_team_id` INT NOT NULL,
+                                                                  `away_team_id` INT NOT NULL,
+                                                                  INDEX `fk_team_participate_game_team1_idx` (`home_team_id` ASC),
+    INDEX `fk_team_participate_game_team2_idx` (`away_team_id` ASC),
+    PRIMARY KEY (`game_id`),
+    CONSTRAINT `fk_team_participate_game_team1`
+    FOREIGN KEY (`home_team_id`)
+    REFERENCES `baseball`.`team` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+    CONSTRAINT `fk_team_participate_game_team2`
+    FOREIGN KEY (`away_team_id`)
+    REFERENCES `baseball`.`team` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+    CONSTRAINT `fk_team_participate_game_game1`
+    FOREIGN KEY (`game_id`)
+    REFERENCES `baseball`.`game` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB;

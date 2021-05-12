@@ -1,5 +1,9 @@
 package kr.codesquad.baseball.utils;
 
+import kr.codesquad.baseball.game.domain.Game;
+import kr.codesquad.baseball.game.domain.GameRepository;
+import kr.codesquad.baseball.game.domain.GameStatus;
+import kr.codesquad.baseball.game.domain.TeamParticipateGame;
 import kr.codesquad.baseball.player.domain.Player;
 import kr.codesquad.baseball.player.domain.PlayerRepository;
 import kr.codesquad.baseball.team.domain.Team;
@@ -57,6 +61,16 @@ public class SampleDataRunner {
                             marvel
                     )
             ));
+        };
+    }
+
+    @Bean
+    @Order(30)
+    public ApplicationRunner saveGame(GameRepository gameRepository) {
+        return args -> {
+            Game game = new Game(GameStatus.PLAYING, new TeamParticipateGame(1L, 2L));
+
+            gameRepository.save(game);
         };
     }
 }
