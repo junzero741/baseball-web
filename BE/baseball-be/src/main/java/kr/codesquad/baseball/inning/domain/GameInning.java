@@ -14,6 +14,7 @@ public class GameInning {
     private long gameId;
     private long teamId;
     private int score;
+    private long pitcherId;
 
     @MappedCollection(idColumn = "GAME_INNING_ID", keyColumn = "PLATE_APPEARANCE_NUMBER")
     private List<PlateAppearance> plateAppearances = new ArrayList<>();
@@ -21,10 +22,11 @@ public class GameInning {
     @Column("GAME_INNING_ID")
     private BaseState baseState = new BaseState();
 
-    public GameInning(int inning, long gameId, long teamId) {
+    public GameInning(int inning, long gameId, long teamId, long pitcherId) {
         this.inning = inning;
         this.gameId = gameId;
         this.teamId = teamId;
+        this.pitcherId = pitcherId;
     }
 
     public GameInning pitch(long pitcherId, PitchResult pitchResult) {
@@ -72,6 +74,10 @@ public class GameInning {
         return score;
     }
 
+    public long getPitcherId() {
+        return pitcherId;
+    }
+
     public List<PlateAppearance> getPlateAppearances() {
         return plateAppearances;
     }
@@ -84,6 +90,7 @@ public class GameInning {
                 ", gameId=" + gameId +
                 ", teamId=" + teamId +
                 ", score=" + score +
+                ", pitcherId=" + pitcherId +
                 ", plateAppearances=" + plateAppearances +
                 ", baseState=" + baseState +
                 '}';

@@ -18,15 +18,15 @@ class InningRepositoryTest {
 
     @Test
     void save() {
-        inningRepository.save(new GameInning(1, 1L, 1L));
-        GameInning secondInning = inningRepository.save(new GameInning(2, 1L, 1L));
+        inningRepository.save(new GameInning(1, 1L, 1L, 1L));
+        GameInning secondInning = inningRepository.save(new GameInning(2, 1L, 1L, 1L));
 
         inningRepository.save(secondInning.updateScore(1));
     }
 
     @Test
     void savePlateAppearance() {
-        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L));
+        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L, 1L));
         firstInning.addNewPlateAppearanceBy(1L);
 
         inningRepository.save(firstInning);
@@ -34,7 +34,7 @@ class InningRepositoryTest {
 
     @Test
     void saveNewPlateAppearance() {
-        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L));
+        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L, 1L));
         firstInning.addNewPlateAppearanceBy(1L);
 
         inningRepository.save(firstInning);
@@ -44,7 +44,7 @@ class InningRepositoryTest {
 
     @Test
     void savePitch() {
-        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L));
+        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L, 1L));
         firstInning.addNewPlateAppearanceBy(1L);
 
         inningRepository.save(firstInning);
@@ -54,7 +54,7 @@ class InningRepositoryTest {
 
     @Test
     void findScoreBy() {
-        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L));
+        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L, 1L));
         assertThat(inningRepository.findScoreBy(1, 1L, 1L)).isEqualTo(0);
 
         inningRepository.save(firstInning.updateScore(2));
@@ -63,10 +63,10 @@ class InningRepositoryTest {
 
     @Test
     void findAllScoresBy() {
-        inningRepository.save(new GameInning(1, 1L, 1L).updateScore(1));
-        inningRepository.save(new GameInning(2, 1L, 1L).updateScore(3));
-        inningRepository.save(new GameInning(3, 1L, 1L).updateScore(2));
-        
+        inningRepository.save(new GameInning(1, 1L, 1L, 1L).updateScore(1));
+        inningRepository.save(new GameInning(2, 1L, 1L, 1L).updateScore(3));
+        inningRepository.save(new GameInning(3, 1L, 1L, 1L).updateScore(2));
+
         assertThat(inningRepository.findAllScoresBy(1L, 1L))
                 .isEqualTo(Arrays.asList(1, 3, 2));
     }
