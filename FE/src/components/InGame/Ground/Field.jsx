@@ -5,6 +5,7 @@ import BallCount from "./BallCount";
 
 const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, reloadData, url }) => {
 	const isOffence = (userTeam === "AWAY") ^ (inningType === "TOP") ? "공격" : "수비";
+  
 	const [runnerList, setRunnerList] = useState([{ base: 0 }]);
 	const [isPlaying, setPlaying] = useState(false);
 

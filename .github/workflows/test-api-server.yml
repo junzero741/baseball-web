@@ -8,6 +8,14 @@ on:
   push:
     branches:
       "BE/**"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    branches-ignore:
+      "Ah-puh"
+>>>>>>> f16b432 (chore: heroku 배포 스크립트)
+=======
+>>>>>>> c78e27d (chore: workflow 수정)
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
