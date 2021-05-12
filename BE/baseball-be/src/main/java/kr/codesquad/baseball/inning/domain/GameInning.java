@@ -23,6 +23,12 @@ public class GameInning {
         this.teamId = teamId;
     }
 
+    public GameInning pitch(long pitcherId, PitchResult pitchResult) {
+        // TODO: 필드에 currentPitcher있으면 더 좋을듯.
+        currentPlateAppearance().pitch(pitcherId, pitchResult);
+        return this;
+    }
+
     public GameInning addNewPlateAppearanceBy(long hitterId) {
         plateAppearances.add(new PlateAppearance(hitterId, plateAppearances.size() + 1));
         return this;
