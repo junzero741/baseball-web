@@ -174,45 +174,15 @@ CREATE TABLE IF NOT EXISTS `baseball`.`user_control_team` (
 
 
 -- -----------------------------------------------------
--- Table `baseball`.`game_lineup`
+-- Table `baseball`.`player_on_team`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `baseball`.`game_lineup` ;
+DROP TABLE IF EXISTS `baseball`.`player_on_team` ;
 
-CREATE TABLE IF NOT EXISTS `baseball`.`game_lineup` (
-                                                        `game_id` INT NOT NULL,
-                                                        `player_id` INT NOT NULL,
-                                                        `team_id` INT NOT NULL,
-                                                        PRIMARY KEY (`game_id`, `player_id`, `team_id`),
-    INDEX `fk_game_has_player_player1_idx` (`player_id` ASC),
-    INDEX `fk_game_has_player_game1_idx` (`game_id` ASC),
-    INDEX `fk_game_has_player_team1_idx` (`team_id` ASC),
-    CONSTRAINT `fk_game_has_player_game1`
-    FOREIGN KEY (`game_id`)
-    REFERENCES `baseball`.`game` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_game_has_player_player1`
-    FOREIGN KEY (`player_id`)
-    REFERENCES `baseball`.`player` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_game_has_player_team1`
-    FOREIGN KEY (`team_id`)
-    REFERENCES `baseball`.`team` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `baseball`.`team_has_player`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `baseball`.`team_has_player` ;
-
-CREATE TABLE IF NOT EXISTS `baseball`.`team_has_player` (
-                                                            `team_id` INT NOT NULL,
-                                                            `player_id` INT NOT NULL,
-                                                            PRIMARY KEY (`team_id`, `player_id`),
+CREATE TABLE IF NOT EXISTS `baseball`.`player_on_team` (
+                                                           `team_id` INT NOT NULL,
+                                                           `player_id` INT NOT NULL,
+                                                           `hitter_order` INT NULL,
+                                                           PRIMARY KEY (`team_id`, `player_id`),
     INDEX `fk_team_has_player_player1_idx` (`player_id` ASC),
     INDEX `fk_team_has_player_team1_idx` (`team_id` ASC),
     CONSTRAINT `fk_team_has_player_team1`
