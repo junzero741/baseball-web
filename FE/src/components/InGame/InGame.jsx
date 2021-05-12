@@ -4,26 +4,13 @@ import ScoreBoard from "./ScoreBoard/ScoreBoard";
 import LineUp from "./LineUp/LineUp";
 import Ground from "./Ground/Ground";
 import Record from "./Record/Record";
-
 import { MainContext } from "../Main";
+import useFetch from "../../utils/useFetch/useFetch";
 
 const InGame = () => {
 	const { gameId, teamId, loginStatus } = useContext(MainContext);
-
-	const [data, setData] = useState();
-	const reloadData = async () => {
-		// pitch나 (공격시 일정간격으로 polling) 상황 때는 투구 결과, 즉 ball hit strike를 보내줄텐데
-		// 그때를 대비해 default parameter로 useEffect때는 결과만 받아오도록 하고
-		// 인자로 {result:ball} 따위를 POST나 PUT할 수 있게 만들어주자
-		try {
-			const response = await fetch(`https://baseball-ahpuh.herokuapp.com/games/${gameId}?teamId=${teamId}`)
-			const json = await response.json()
-			setData(()=>json)
-		} catch (error) {
-			console.log("fetch error in InGame : ",error)
-		}
-	};
-	useEffect(() => reloadData(), []);
+	const url = `https://baseball-ahpuh.herokuapp.com/games/${gameId}?teamId=${teamId}`;
+	const { data, fetchData } = useFetch({ url: url, initialValue: null });
 
 	const [slideScoreBoard, toggleScoreBoard] = useState(false);
 	const [slideLineUp, toggleLineUp] = useState(false);
@@ -38,7 +25,7 @@ const InGame = () => {
 			<ScoreBoard slide={slideScoreBoard} toggle={toggleScoreBoard} isDark={isDark} setDark={setDark} gameId={gameId} />
 			<LineUp slide={slideLineUp} toggle={toggleLineUp} isDark={isDark} setDark={setDark} gameId={gameId} />
 			<Main onClick={clickMain} isDark={isDark}>
-				<Ground reloadData={reloadData} data={data} teamId={teamId} />
+				<Ground reloadData={fetchData} data={data} teamId={teamId} url={url} />
 				<Record data={data} />
 			</Main>
 		</StyledInGame>

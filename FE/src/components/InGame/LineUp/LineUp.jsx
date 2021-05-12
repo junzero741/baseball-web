@@ -1,21 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Table from "./Table";
+import useFetch from "../../../utils/useFetch/useFetch";
 
 const LineUp = ({ gameId, slide, toggle, isDark, setDark }) => {
-	const [data, setData] = useState();
-	const fetchData = async () => {
-		try {
-			const response = await fetch(`https://baseball-ahpuh.herokuapp.com/games/${gameId}/lineup`);
-			const json = await response.json();
-			setData(() => json);
-		} catch (error) {
-			console.log("fetch error in LineUp : ", error);
-		}
-	};
+	const { data } = useFetch({ url: `https://baseball-ahpuh.herokuapp.com/games/${gameId}/lineup`, initialValue: null });
+
 	const slideLineUp = async () => {
 		if (isDark) return;
-		await fetchData();
 		toggle(true);
 		setDark(true);
 	};

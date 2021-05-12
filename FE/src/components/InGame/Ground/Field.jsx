@@ -3,9 +3,9 @@ import styled from "styled-components";
 import delay from "../../../utils/delay/delay";
 import BallCount from "./BallCount";
 
-const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, reloadData }) => {
-	const isOffence = userTeam === "AWAY" ^ inningType === "TOP" ? "공격" : "수비";
-
+const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, reloadData, url }) => {
+	const isOffence = (userTeam === "AWAY") ^ (inningType === "TOP") ? "공격" : "수비";
+  
 	const [runnerList, setRunnerList] = useState([{ base: 0 }]);
 	const [isPlaying, setPlaying] = useState(false);
 
@@ -29,7 +29,7 @@ const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, reloadD
 	const arrive = () => setRunnerList((list) => [...list.map((el) => ({ ...el, isRunning: false }))]);
 
 	const play = async () => {
-		await reloadData();
+		await reloadData(url);
 		await pitch();
 		await hit();
 	};
