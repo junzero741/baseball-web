@@ -14,4 +14,10 @@ public interface InningRepository extends CrudRepository<GameInning, Long> {
             "BASEBALL.GAME_INNING(INNING, GAME_ID, TEAM_ID, SCORE) " +
             "VALUES(:inning, :gameId, :teamId, :score) ")
     int save(@Param("inning") long inning, @Param("gameId") long gameId, @Param("teamId") long teamId, @Param("score") long score);
+
+    @Modifying
+    @Query("UPDATE BASEBALL.GAME_INNING " +
+            "SET SCORE = :score " +
+            "WHERE INNING = :inning AND GAME_ID = :gameId AND TEAM_ID = :teamId")
+    int updateScore(@Param("inning") long inning, @Param("gameId") long gameId, @Param("teamId") long teamId, @Param("score") long score);
 }
