@@ -1,6 +1,5 @@
 package kr.codesquad.baseball.inning.domain;
 
-import kr.codesquad.baseball.inning.PlateAppearance;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
