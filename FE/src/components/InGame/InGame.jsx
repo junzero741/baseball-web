@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import ScoreBoard from "./ScoreBoard/ScoreBoard";
 import LineUp from "./LineUp/LineUp";
@@ -9,8 +9,7 @@ import useFetch from "../../utils/useFetch/useFetch";
 
 const InGame = () => {
 	const { gameId, teamId, loginStatus } = useContext(MainContext);
-	const url = `https://baseball-ahpuh.herokuapp.com/games/${gameId}?teamId=${teamId}`;
-	const { data, fetchData } = useFetch({ url: url, initialValue: null });
+	const { data, fetchData } = useFetch({ url: `https://baseball-ahpuh.herokuapp.com/games/${gameId}?teamId=${teamId}`, initialValue: null });
 
 	const [slideScoreBoard, toggleScoreBoard] = useState(false);
 	const [slideLineUp, toggleLineUp] = useState(false);
@@ -25,7 +24,7 @@ const InGame = () => {
 			<ScoreBoard slide={slideScoreBoard} toggle={toggleScoreBoard} isDark={isDark} setDark={setDark} gameId={gameId} />
 			<LineUp slide={slideLineUp} toggle={toggleLineUp} isDark={isDark} setDark={setDark} gameId={gameId} />
 			<Main onClick={clickMain} isDark={isDark}>
-				<Ground reloadData={fetchData} data={data} teamId={teamId} url={url} />
+				<Ground fetchData={fetchData} data={data} teamId={teamId} />
 				<Record data={data} />
 			</Main>
 		</StyledInGame>

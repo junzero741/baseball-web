@@ -2,12 +2,12 @@ import styled from "styled-components";
 import Score from "./Score";
 import Field from "./Field";
 
-const Ground = ({ data, reloadData, teamId, url }) => {
+const Ground = ({ data, fetchData, teamId }) => {
 	const userTeam = data.awayTeam.id === teamId ? "AWAY" : "HOME";
 	return (
 		<StyledGround>
 			<Score {...data} userTeam={userTeam} />
-			<Field {...data} reloadData={reloadData} userTeam={userTeam} url={url} />
+			<Field {...data} fetchData={fetchData} userTeam={userTeam} />
 		</StyledGround>
 	);
 };

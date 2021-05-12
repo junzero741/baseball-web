@@ -1,13 +1,13 @@
-import { useState } from "react";
 import styled from "styled-components";
 import Table from "./Table";
 import useFetch from "../../../utils/useFetch/useFetch";
 
 const LineUp = ({ gameId, slide, toggle, isDark, setDark }) => {
-	const { data } = useFetch({ url: `https://baseball-ahpuh.herokuapp.com/games/${gameId}/lineup`, initialValue: null });
+	const { data, fetchData } = useFetch({ url: `https://baseball-ahpuh.herokuapp.com/games/${gameId}/lineup`, initialValue: null });
 
 	const slideLineUp = async () => {
 		if (isDark) return;
+		await fetchData()
 		toggle(true);
 		setDark(true);
 	};
