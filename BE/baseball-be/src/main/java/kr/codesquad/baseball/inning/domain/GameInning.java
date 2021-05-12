@@ -4,19 +4,18 @@ import org.springframework.data.annotation.Id;
 
 public class GameInning {
     @Id
-    private long inning;
+    private int inning;
     private long gameId;
     private long teamId;
-    private long score;
+    private int score;
 
-    public GameInning(long inning, long gameId, long teamId, long score) {
+    public GameInning(int inning, long gameId, long teamId) {
         this.inning = inning;
         this.gameId = gameId;
         this.teamId = teamId;
-        this.score = score;
     }
 
-    public long getInning() {
+    public int getInning() {
         return inning;
     }
 
@@ -28,7 +27,7 @@ public class GameInning {
         return teamId;
     }
 
-    public long getScore() {
+    public int getScore() {
         return score;
     }
 
