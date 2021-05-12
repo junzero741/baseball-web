@@ -81,9 +81,9 @@ DROP TABLE IF EXISTS `baseball`.`base_info` ;
 
 CREATE TABLE IF NOT EXISTS `baseball`.`base_info` (
                                                       `game_id` INT NOT NULL,
-                                                      `first_base` TINYINT NULL,
-                                                      `second_base` TINYINT NULL,
-                                                      `third_base` TINYINT NULL,
+                                                      `first_base` BOOLEAN NULL,
+                                                      `second_base` BOOLEAN NULL,
+                                                      `third_base` BOOLEAN NULL,
                                                       PRIMARY KEY (`game_id`),
     CONSTRAINT `fk_base_info_game1`
     FOREIGN KEY (`game_id`)
@@ -99,23 +99,23 @@ CREATE TABLE IF NOT EXISTS `baseball`.`base_info` (
 DROP TABLE IF EXISTS `baseball`.`plate_appearance` ;
 
 CREATE TABLE IF NOT EXISTS `baseball`.`plate_appearance` (
-                                                             `plate_appearance_number` INT NOT NULL,
+                                                             `id` INT NOT NULL AUTO_INCREMENT,
+                                                             `game_inning_id` INT NOT NULL,
                                                              `hitter_id` INT NOT NULL,
-                                                             `is_out` TINYINT NULL,
-                                                             `game_id` INT NOT NULL,
-                                                             `inning` INT NOT NULL,
-                                                             `team_id` INT NOT NULL,
-                                                             PRIMARY KEY (`plate_appearance_number`, `game_id`, `inning`, `team_id`),
+                                                             `plate_appearance_number` INT NOT NULL,
+                                                             `is_out` BOOLEAN NULL,
+                                                             PRIMARY KEY (`id`),
     INDEX `fk_plate_appearance_player1_idx` (`hitter_id` ASC),
-    INDEX `fk_plate_appearance_game_inning1_idx` (`game_id` ASC, `inning` ASC, `team_id` ASC),
+    INDEX `fk_plate_appearance_game_inning1_idx` (`game_inning_id` ASC),
+    UNIQUE INDEX `game_inning_id_hitter_id_plate_appearance_number_UNIQUE` (`game_inning_id` ASC, `hitter_id` ASC, `plate_appearance_number` ASC),
     CONSTRAINT `fk_plate_appearance_player1`
     FOREIGN KEY (`hitter_id`)
     REFERENCES `baseball`.`player` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
     CONSTRAINT `fk_plate_appearance_game_inning1`
-    FOREIGN KEY (`game_id` , `inning` , `team_id`)
-    REFERENCES `baseball`.`game_inning` (`game_id` , `inning` , `team_id`)
+    FOREIGN KEY (`game_inning_id`)
+    REFERENCES `baseball`.`game_inning` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB;
@@ -143,8 +143,8 @@ CREATE TABLE IF NOT EXISTS `baseball`.`pitch` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
     CONSTRAINT `fk_pitch_plate_appearance1`
-    FOREIGN KEY (`plate_appearance_number` , `game_id` , `inning` , `team_id`)
-    REFERENCES `baseball`.`plate_appearance` (`plate_appearance_number` , `game_id` , `inning` , `team_id`)
+    FOREIGN KEY (`plate_appearance_number`)
+    REFERENCES `baseball`.`plate_appearance` (`plate_appearance_number`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB;
