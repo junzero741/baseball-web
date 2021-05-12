@@ -1,4 +1,4 @@
-package kr.codesquad.baseball.inning;
+package kr.codesquad.baseball.inning.controller;
 
 import kr.codesquad.baseball.utils.SampleDataFactory;
 import org.springframework.web.bind.annotation.*;

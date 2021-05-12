@@ -1,4 +1,4 @@
-package kr.codesquad.baseball.inning;
+package kr.codesquad.baseball.inning.controller;
 
 import kr.codesquad.baseball.inning.domain.BaseState;
 import kr.codesquad.baseball.player.PlayerDTO;
