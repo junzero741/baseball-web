@@ -13,6 +13,7 @@ build/
 
 # log
 logs/
+*.log
 
 # dbconfig
 dbconfig.properties
