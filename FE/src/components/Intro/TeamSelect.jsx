@@ -1,26 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useFetch from "../../utils/useFetch/useFetch";
 import Game from "./Game";
 
 const TeamSelect = () => {
-	// const [gameList, setGameList] = useState([]);
 	const [isHover, setHover] = useState(false);
 	const [alertMessage, setAlertMessage] = useState("참가할 게임을 선택해주세요");
-	// useEffect(() => {
-	// 	const fetchGames = async () => {
-	// 		try {
-	// 			const response = await fetch("https://baseball-ahpuh.herokuapp.com/games");
-	// 			const json = await response.json();
-	// 			setGameList(() => json);
-	// 		} catch (error) {
-	// 			console.log("fetch error in TeamSelect : ", error);
-	// 			setAlertMessage("게임 목록을 불러올 수 없습니다")
-	// 		}
-	// 	};
-	// 	fetchGames();
-	// }, []);
 	const { data } = useFetch({ url: "https://baseball-ahpuh.herokuapp.com/games", initialValue: [] });
+	const somethingAwesomeCheckTeamAvailable = () => false; // 해당 팀 선택시 게임 가능한 팀인지 체크
+	useEffect(() => {
+		if (somethingAwesomeCheckTeamAvailable(data)) setAlertMessage(() => "고를수 없는 팀입니다.");
+	}, [data]);
 
 	return (
 		<StyledTeamSelect>

@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
 const BallCount = ({ hitterRecords }) => {
-	const count = hitterRecords[0].results.reduce((acc, cur) => ({ ...acc, ball: cur === "B" ? ++acc.ball : acc.ball, strike: cur === "S" ? ++acc.strike : acc.strike }), { ball: 0, strike: 0, out: hitterRecords.reduce((acc, cur) => (cur.out ? acc + 1 : acc), 0) });
+	const count = {
+		ball: hitterRecords[0].results.filter((el) => el === "B").length,
+		strike: hitterRecords[0].results.filter((el) => el === "S").length,
+		out: hitterRecords.filter((el) => el.out).length,
+	};
+
 	return (
 		<StyledBallCount>
 			<Count type="BALL" count={count.ball} />

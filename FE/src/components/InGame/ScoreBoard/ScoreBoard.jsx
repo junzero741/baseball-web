@@ -7,7 +7,7 @@ const ScoreBoard = ({ gameId, slide, toggle, isDark, setDark }) => {
 
 	const slideScoreBoard = async () => {
 		if (isDark) return;
-		await fetchData()
+		await fetchData();
 		toggle(true);
 		setDark(true);
 	};

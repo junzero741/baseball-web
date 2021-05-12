@@ -3,23 +3,28 @@ import styled from "styled-components";
 import delay from "../../../utils/delay/delay";
 import BallCount from "./BallCount";
 
+const delayList = {
+	windup: 200,
+	throwing: 250,
+	release: 150,
+	run: 400,
+};
+
 const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, fetchData }) => {
 	const isOffence = (userTeam === "AWAY") ^ (inningType === "TOP") ? "공격" : "수비";
-  
+
 	const [runnerList, setRunnerList] = useState([{ base: 0 }]);
 	const [isPlaying, setPlaying] = useState(false);
 
 	const [pitchingStep, setpitchingStep] = useState("release");
 
-	const pitch = async () => {
-		await delay(() => setpitchingStep("windup"), 200);
-		await delay(() => setpitchingStep("throwing"), 250);
-		await delay(() => setpitchingStep("release"), 150);
+	const pitch = async (stepList) => {
+		for (let step of stepList) await delay(() => setpitchingStep(step), delayList[step]);
 	};
 
 	const hit = async () => {
 		setPlaying(() => true);
-		await delay(run, 400);
+		await delay(run, delayList.run);
 		arrive();
 		setPlaying(() => false);
 	};
@@ -29,8 +34,7 @@ const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, fetchDa
 	const arrive = () => setRunnerList((list) => [...list.map((el) => ({ ...el, isRunning: false }))]);
 
 	const play = async () => {
-		await fetchData();
-		await pitch();
+		await Promise.all[(fetchData(), pitch(["windup", "throwing", "release"]))];
 		await hit();
 	};
 	//prettier-ignore

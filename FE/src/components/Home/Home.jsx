@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { githubProvider, googleProvider } from "../../config/authProvider";
 import { MainContext } from "../Main";
@@ -10,31 +10,26 @@ const Home = () => {
 
 	const handleOnClick = async (provider) => {
 		const res = await socialMediaAuth(provider);
-		if (res) {
+		if (res.email) {
 			setLoginStatus(true);
-			const id = getOnlyId(res.email);
-			setUserId(id);
+			setUserId(getId(res.email));
 		}
 	};
-	const getOnlyId = (email) => {
-		const arr = email.split("@");
-		return arr[0];
-	};
+	const getId = (email) => email.split("@")[0]
 
+	
 	return (
 		<Wrapper>
 			<StyledHome loginStatus={loginStatus}>
 				<Title>
 					BASEBALL ONLINE <SubTitle>Freddie, Goody, Seong</SubTitle>
 				</Title>
-				{loginStatus ? <UserInfo>{userId}</UserInfo> : <></>}
+				{loginStatus && <UserInfo>{userId}</UserInfo>}
 				<Link to="/intro">
 					<SelectTeam login={loginStatus}>게임 시작하기</SelectTeam>
 				</Link>
 				<Login>
-					{loginStatus ? (
-						<></>
-					) : (
+					{loginStatus || (
 						<>
 							<div>소셜 계정으로 로그인</div>
 							<LoginBtns>
@@ -58,6 +53,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledHome = styled.div`
+	position: relative;
 	display: grid;
 	height: 720px;
 	grid-template-rows: ${(props) => props.loginStatus && "1fr 0.1fr 1fr 0.5fr"};
@@ -76,12 +72,6 @@ const SelectTeam = styled.button`
 	justify-self: center;
 	justify-content: center;
 	align-items: center;
-`;
-
-const LoginRequire = styled.div`
-  font-size: 26px;
-  color: white;
-  text-align: center;
 `;
 
 const UserInfo = styled.div`

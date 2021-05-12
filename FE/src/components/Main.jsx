@@ -7,16 +7,12 @@ import InGame from "./InGame/InGame";
 import NoMatch from "./NoMatch/NoMatch";
 
 const Main = () => {
-	const [gameId, setGameId] = useState();
-	const [teamId, setTeamId] = useState();
-	const [loginStatus, setLoginStatus] = useState(false);
-	const [userId, setUserId] = useState();
 	return (
-		<MainContext.Provider value={{ gameId, setGameId, teamId, setTeamId, loginStatus, setLoginStatus, userId, setUserId }}>
+		<MainContextProvider>
 			<StyledMain>
 				<RouterComponent />
 			</StyledMain>
-		</MainContext.Provider>
+		</MainContextProvider>
 	);
 };
 
@@ -39,6 +35,19 @@ const RouterComponent = () => (
 		</Switch>
 	</Router>
 );
+
+const MainContextProvider = ({ children }) => {
+	const [gameId, setGameId] = useState();
+	const [teamId, setTeamId] = useState();
+	const [loginStatus, setLoginStatus] = useState(false);
+	const [userId, setUserId] = useState();
+
+	return (
+		<MainContext.Provider value={{ gameId, setGameId, teamId, setTeamId, loginStatus, setLoginStatus, userId, setUserId }}>
+			{children}
+		</MainContext.Provider>
+	);
+};
 
 const StyledMain = styled.div`
 	background-image: url("image/mlbground_edit.jpg");
