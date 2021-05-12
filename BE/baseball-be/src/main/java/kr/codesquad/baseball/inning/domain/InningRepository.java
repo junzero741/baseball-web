@@ -15,4 +15,13 @@ public interface InningRepository extends CrudRepository<GameInning, Long> {
 
     @Query("SELECT SCORE FROM GAME_INNING WHERE GAME_ID=:gameId AND TEAM_ID=:teamId")
     List<Integer> findAllScoresBy(@Param("gameId") long gameId, @Param("teamId") long teamId);
+
+    @Query("SELECT COUNT(*) " +
+            "FROM GAME_INNING GI " +
+            "JOIN PLATE_APPEARANCE PA ON PA.GAME_INNING_ID = GI.ID " +
+            "JOIN PITCH P ON P.PLATE_APPEARANCE_ID = PA.ID  " +
+            "WHERE GI.GAME_ID = :gameId " +
+            "AND PA.HITTER_ID = :hitterId " +
+            "AND P.RESULT = 'HIT'")
+    int hitCountOf(@Param("gameId") long gameId, @Param("hitterId") long hitterId);
 }

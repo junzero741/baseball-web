@@ -70,4 +70,20 @@ class InningRepositoryTest {
         assertThat(inningRepository.findAllScoresBy(1L, 1L))
                 .isEqualTo(Arrays.asList(1, 3, 2));
     }
+
+    @Test
+    void hitCountOf() {
+        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L, 1L));
+        firstInning.addNewPlateAppearanceBy(1L);
+
+        inningRepository.save(firstInning);
+        inningRepository.save(firstInning.pitch(1L, PitchResult.STRIKE));
+        inningRepository.save(firstInning.pitch(1L, PitchResult.STRIKE));
+        inningRepository.save(firstInning.pitch(1L, PitchResult.HIT));
+
+        firstInning.addNewPlateAppearanceBy(1L);
+        inningRepository.save(firstInning.pitch(1L, PitchResult.HIT));
+
+        assertThat(inningRepository.hitCountOf(1L, 1L)).isEqualTo(2);
+    }
 }
