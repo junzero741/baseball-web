@@ -26,6 +26,10 @@ public class GameService {
                 .collect(Collectors.toList());
     }
 
+    public GameDTO readOne(long id) {
+        return gameToGameDTO(gameRepository.findGameById(id));
+    }
+
     private GameDTO gameToGameDTO(Game game) {
         return GameDTO.builder()
                 .id(game)

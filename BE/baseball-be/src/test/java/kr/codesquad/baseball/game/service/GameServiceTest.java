@@ -52,7 +52,6 @@ class GameServiceTest {
         when(teamRepository.findTeamById(2L))
                 .thenReturn(awayTeamMockup);
 
-
         assertThat(gameService.readAll())
                 .isEqualTo(expected);
     }
@@ -72,6 +71,37 @@ class GameServiceTest {
                                         .awayTeam(new TeamDTO(2L, "Marvel"))
                                         .build()
                         )
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("readOneProvider")
+    void readOne(Game gameMockup, Team homeTeamMockup, Team awayTeamMockup, GameDTO expected) {
+        when(gameRepository.findGameById(1L))
+                .thenReturn(gameMockup);
+
+        when(teamRepository.findTeamById(1L))
+                .thenReturn(homeTeamMockup);
+
+        when(teamRepository.findTeamById(2L))
+                .thenReturn(awayTeamMockup);
+
+        assertThat(gameService.readOne(expected.getId()))
+                .isEqualTo(expected);
+    }
+
+    static Stream<Arguments> readOneProvider() {
+        return Stream.of(
+                Arguments.of(
+                        Game.create(1L, GameStatus.PLAYING, 1L, 2L),
+                        Team.create(1L, "Captain"),
+                        Team.create(2L, "Marvel"),
+                        GameDTO.builder()
+                                .id(1L)
+                                .homeTeam(new TeamDTO(1L, "Captain"))
+                                .awayTeam(new TeamDTO(2L, "Marvel"))
+                                .build()
                 )
         );
     }
