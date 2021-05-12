@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 @Transactional
 class InningRepositoryTest {
@@ -46,5 +48,14 @@ class InningRepositoryTest {
         inningRepository.save(firstInning);
         inningRepository.save(firstInning.pitch(1L, PitchResult.STRIKE));
         inningRepository.save(firstInning.pitch(1L, PitchResult.STRIKE));
+    }
+
+    @Test
+    void findScoreBy() {
+        GameInning firstInning = inningRepository.save(new GameInning(1, 1L, 1L));
+        assertThat(inningRepository.findScoreBy(1, 1L, 1L)).isEqualTo(0);
+
+        inningRepository.save(firstInning.updateScore(2));
+        assertThat(inningRepository.findScoreBy(1, 1L, 1L)).isEqualTo(2);
     }
 }
