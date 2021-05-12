@@ -52,13 +52,15 @@ CREATE TABLE IF NOT EXISTS `baseball`.`player` (
 DROP TABLE IF EXISTS `baseball`.`game_inning` ;
 
 CREATE TABLE IF NOT EXISTS `baseball`.`game_inning` (
+                                                        `id` INT NOT NULL AUTO_INCREMENT,
                                                         `game_id` INT NOT NULL,
-                                                        `inning` INT NOT NULL,
                                                         `team_id` INT NOT NULL,
+                                                        `inning` INT NOT NULL,
                                                         `score` INT NULL,
-                                                        PRIMARY KEY (`game_id`, `inning`, `team_id`),
+                                                        PRIMARY KEY (`id`),
     INDEX `fk_game_has_team_game_idx` (`game_id` ASC),
     INDEX `fk_game_inning_team1_idx` (`team_id` ASC),
+    UNIQUE INDEX `game_id_team_id_inning_UNIQUE` (`game_id` ASC, `team_id` ASC, `inning` ASC),
     CONSTRAINT `fk_game_has_team_game`
     FOREIGN KEY (`game_id`)
     REFERENCES `baseball`.`game` (`id`)

@@ -15,12 +15,12 @@ class InningRepositoryTest {
     @Test
     void save() {
 
-        inningRepository.save(1, 1L, 1L, 0);
-        inningRepository.save(2, 1L, 1L, 0);
+        inningRepository.save(new GameInning(1, 1L, 1L));
+        GameInning secondInning = inningRepository.save(new GameInning(2, 1L, 1L));
 
         System.out.println(inningRepository.findAll());
 
-        inningRepository.updateScore(2, 1L, 1L, 1);
+        inningRepository.save(secondInning.updateScore(1));
         System.out.println(inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc( 1L, 1L));
     }
 }
