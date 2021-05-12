@@ -21,20 +21,11 @@ class TeamRepositoryTest {
     PlayerRepository playerRepository;
 
     @Test
-    void findAll() {
-        System.out.println(teamRepository.findAll());
-    }
-
-    @Test
     void save() {
         Team team = new Team("test");
-
         List<Player> players = playerRepository.findAllById(LongStream.range(1, 10).boxed().collect(Collectors.toList()));
-
         team.addPlayers(players);
 
-        Team result = teamRepository.save(team);
-
-        System.out.println(result);
+        teamRepository.save(team);
     }
 }

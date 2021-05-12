@@ -19,21 +19,6 @@ class PlayerRepositoryTest {
     PlayerRepository playerRepository;
 
     @Test
-    void findAll() {
-        List<Player> players = new ArrayList<>();
-
-        players.addAll(SampleDataFactory.players());
-        players.addAll(SampleDataFactory.players());
-
-        List<Player> result = playerRepository.findAll();
-
-        for (int i = 0; i < result.size(); i++) {
-            assertThat(result.get(i).getName())
-                    .isEqualTo(players.get(i).getName());
-        }
-    }
-
-    @Test
     void findOne() {
         assertThat(playerRepository.findPlayerById(1L).getName()).isEqualTo("김광진");
     }
@@ -41,11 +26,6 @@ class PlayerRepositoryTest {
     @Test
     void save() {
         Player player = new Player("test");
-
-        long id = playerRepository.save(player).getId();
-
-        Player result = playerRepository.findPlayerById(id);
-
-        assertThat(result.getName()).isEqualTo(player.getName());
+        playerRepository.save(player);
     }
 }
