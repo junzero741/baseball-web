@@ -16,6 +16,20 @@ public class Game {
         this.teamParticipateGame = teamParticipateGame;
     }
 
+    public static Game create(long id, GameStatus gameStatus, long homeTeamId, long awayTeamId) {
+        Game game = new Game(gameStatus, new TeamParticipateGame(homeTeamId, awayTeamId));
+        game.id = id;
+        return game;
+    }
+
+    public long homeTeamId() {
+        return teamParticipateGame.getHomeTeamId();
+    }
+
+    public long awayTeamId() {
+        return teamParticipateGame.getAwayTeamId();
+    }
+
     public Long getId() {
         return id;
     }

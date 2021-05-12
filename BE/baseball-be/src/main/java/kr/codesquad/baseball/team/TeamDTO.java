@@ -1,8 +1,10 @@
 package kr.codesquad.baseball.team;
 
 import kr.codesquad.baseball.game.controller.PlayerStatus;
+import kr.codesquad.baseball.team.domain.Team;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TeamDTO {
     private long id;
@@ -13,12 +15,37 @@ public class TeamDTO {
         this.name = name;
     }
 
+    public static TeamDTO from(Team team) {
+        return new TeamDTO(team.getId(), team.getName());
+    }
+
     public long getId() {
         return id;
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TeamDTO teamDTO = (TeamDTO) o;
+        return id == teamDTO.id && Objects.equals(name, teamDTO.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "TeamDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     public static class WithScore extends TeamDTO {

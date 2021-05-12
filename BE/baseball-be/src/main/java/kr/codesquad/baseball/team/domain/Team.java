@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Team {
@@ -29,6 +30,10 @@ public class Team {
 
         this.id = id;
         this.players = players;
+    }
+
+    public static Team create(long id, String name) {
+        return new Team(id, name, Collections.emptyList());
     }
 
     public void addPlayers(List<Player> players) {
