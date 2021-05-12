@@ -69,10 +69,10 @@ public class GameInning {
 
     public InningType inningTypeBy(long homeTeamId) {
         if (teamId == homeTeamId) {
-            return InningType.BOTTOM;
+            return InningType.TOP;
         }
 
-        return InningType.TOP;
+        return InningType.BOTTOM;
     }
 
     public Long getId() {

@@ -4,6 +4,8 @@ import kr.codesquad.baseball.game.domain.Game;
 import kr.codesquad.baseball.game.domain.GameRepository;
 import kr.codesquad.baseball.game.domain.GameStatus;
 import kr.codesquad.baseball.game.domain.TeamParticipateGame;
+import kr.codesquad.baseball.inning.domain.GameInning;
+import kr.codesquad.baseball.inning.domain.InningRepository;
 import kr.codesquad.baseball.player.domain.Player;
 import kr.codesquad.baseball.player.domain.PlayerRepository;
 import kr.codesquad.baseball.team.domain.Team;
@@ -66,11 +68,16 @@ public class SampleDataRunner {
 
     @Bean
     @Order(30)
-    public ApplicationRunner saveGame(GameRepository gameRepository) {
+    public ApplicationRunner saveGame(GameRepository gameRepository, InningRepository inningRepository) {
         return args -> {
             Game game = new Game(GameStatus.PLAYING, new TeamParticipateGame(1L, 2L));
 
             gameRepository.save(game);
+
+            // 게임 초기화 시 이닝도 함께 초기회돼야 함.
+            GameInning gameInning = new GameInning(1, game.getId(), game.homeTeamId(), 7L);
+            gameInning.addNewPlateAppearanceBy(10L);
+            inningRepository.save(gameInning);
         };
     }
 }

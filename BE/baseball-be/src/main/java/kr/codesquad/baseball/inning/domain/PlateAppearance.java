@@ -28,6 +28,10 @@ public class PlateAppearance {
     }
 
     public int pitchCount() {
+        if (pitches.size() == 0) {
+            return 0;
+        }
+
         return latestPitch().getPitchNumber();
     }
 

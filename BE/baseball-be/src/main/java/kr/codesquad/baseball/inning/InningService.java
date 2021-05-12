@@ -36,8 +36,14 @@ public class InningService {
 
     public InningDTO readOne(long gameId, long teamId) {
         GameInning gameInning = inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc(gameId, teamId);
-        InningType inningType = gameInning.inningTypeBy(gameInning.getTeamId());
+        if (gameInning == null) {
+            //TODO: 누가 투수인지 확인 필요
+            //TODO: save가 여기서 이뤄지면 안 됨
+            gameInning = inningRepository.save(new GameInning(1, gameId, teamId, 10L));
+        }
+
         GameDTO gameDTO = gameService.readOne(gameId);
+        InningType inningType = gameInning.inningTypeBy(gameDTO.homeTeamId());
 
         int homeTeamTotalScore = totalScoreOf(gameId, gameDTO.homeTeamId());
         int awayTeamTotalScore = totalScoreOf(gameId, gameDTO.awayTeamId());
@@ -51,7 +57,7 @@ public class InningService {
         long attackTeamId = inningType == InningType.BOTTOM ? homeTeam.getId() : awayTeam.getId();
 
         Team attackingTeam = teamRepository.findTeamById(attackTeamId);
-        int currentHitterOrder = attackingTeam.getPlayers().get(attackingTeam.getPlayers().indexOf(hitter)).getHitterOrder();
+        int currentHitterOrder = attackingTeam.getPlayers().get(attackingTeam.findPlayerBy(hitter.getId()).getHitterOrder()).getHitterOrder();
         int hitCount = inningRepository.hitCountOf(gameId, hitter.getId());
 
         List<HitterRecord> hitterRecords = gameInning.getPlateAppearances().stream()
