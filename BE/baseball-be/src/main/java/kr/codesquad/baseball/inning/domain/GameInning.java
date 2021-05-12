@@ -1,6 +1,5 @@
 package kr.codesquad.baseball.inning.domain;
 
-import kr.codesquad.baseball.inning.PlateAppearance;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
