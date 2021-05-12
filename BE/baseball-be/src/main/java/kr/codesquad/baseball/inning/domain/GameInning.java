@@ -30,8 +30,7 @@ public class GameInning {
         this.pitcherId = pitcherId;
     }
 
-    public GameInning pitch(long pitcherId, PitchResult pitchResult) {
-        // TODO: 필드에 currentPitcher있으면 더 좋을듯.
+    public GameInning pitch(PitchResult pitchResult) {
         currentPlateAppearance().pitch(pitcherId, pitchResult);
         return this;
     }
