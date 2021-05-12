@@ -1,6 +1,7 @@
 package kr.codesquad.baseball.game.service;
 
 import kr.codesquad.baseball.game.controller.GameDTO;
+import kr.codesquad.baseball.game.domain.Game;
 import kr.codesquad.baseball.game.domain.GameRepository;
 import kr.codesquad.baseball.team.domain.TeamRepository;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,16 @@ public class GameService {
 
     public List<GameDTO> readAll() {
         return gameRepository.findAll().stream()
-                .map(game -> GameDTO.builder()
-                        .id(game)
-                        .homeTeam(teamRepository.findTeamById(game.homeTeamId()))
-                        .awayTeam(teamRepository.findTeamById(game.awayTeamId()))
-                        .build()
-                ).collect(Collectors.toList());
+                .map(this::gameToGameDTO)
+                .collect(Collectors.toList());
     }
+
+    private GameDTO gameToGameDTO(Game game) {
+        return GameDTO.builder()
+                .id(game)
+                .homeTeam(teamRepository.findTeamById(game.homeTeamId()))
+                .awayTeam(teamRepository.findTeamById(game.awayTeamId()))
+                .build();
+    }
+
 }
