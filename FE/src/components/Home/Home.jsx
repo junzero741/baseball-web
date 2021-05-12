@@ -9,15 +9,15 @@ const Home = () => {
 	const { loginStatus, setLoginStatus, userId, setUserId } = useContext(MainContext);
 
 	const handleOnClick = async (provider) => {
-		const res = await socialMediaAuth(provider);
-		if (res.email) {
+		const user = await socialMediaAuth(provider);
+		if (user.email) {
 			setLoginStatus(true);
-			setUserId(getId(res.email));
+			setUserId(getId(user.email));
+			localStorage.setItem("userId", JSON.stringify(userId));
 		}
 	};
-	const getId = (email) => email.split("@")[0]
+	const getId = (email) => email.split("@")[0];
 
-	
 	return (
 		<Wrapper>
 			<StyledHome loginStatus={loginStatus}>
@@ -64,7 +64,7 @@ const SelectTeam = styled.button`
 	position: absolute;
 	top: 45%;
 	left: 50%;
-  transform:translateX(-50%);
+	transform: translateX(-50%);
 	width: 310px;
 	height: 138px;
 	font-size: 30px;
