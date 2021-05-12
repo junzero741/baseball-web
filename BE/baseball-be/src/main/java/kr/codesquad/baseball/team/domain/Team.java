@@ -48,6 +48,13 @@ public class Team {
         return new Team(id, name, players);
     }
 
+    public PlayerOnTeam findPlayerBy(long playerId) {
+        return players.stream()
+                .filter(playerOnTeam -> playerOnTeam.getPlayerId() == playerId)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 선수 id. playerId : " + playerId));
+    }
+
     public Long getId() {
         return id;
     }

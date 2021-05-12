@@ -25,6 +25,22 @@ public class GameDTO {
         return new GameDTOBuilder();
     }
 
+    public long homeTeamId() {
+        return homeTeam.getId();
+    }
+
+    public long awayTeamId() {
+        return awayTeam.getId();
+    }
+
+    public TeamDTO.WithScore homeTeamWithScore(int score) {
+        return homeTeam.withScore(score);
+    }
+
+    public TeamDTO.WithScore awayTeamWithScore(int score) {
+        return awayTeam.withScore(score);
+    }
+
     public long getId() {
         return id;
     }

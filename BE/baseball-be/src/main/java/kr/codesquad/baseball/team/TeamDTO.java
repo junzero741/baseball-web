@@ -19,6 +19,10 @@ public class TeamDTO {
         return new TeamDTO(team.getId(), team.getName());
     }
 
+    public WithScore withScore(int score) {
+        return new WithScore(id, name, score);
+    }
+
     public long getId() {
         return id;
     }

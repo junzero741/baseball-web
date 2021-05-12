@@ -4,6 +4,7 @@ import kr.codesquad.baseball.game.controller.GameDTO;
 import kr.codesquad.baseball.game.controller.GameScoresDTO;
 import kr.codesquad.baseball.game.controller.LineUpDTO;
 import kr.codesquad.baseball.game.controller.PlayerStatus;
+import kr.codesquad.baseball.inning.controller.InningType;
 import kr.codesquad.baseball.inning.domain.BaseState;
 import kr.codesquad.baseball.inning.controller.HitterRecord;
 import kr.codesquad.baseball.inning.controller.InningDTO;
@@ -32,7 +33,7 @@ public class SampleDataFactory {
     public static InningDTO inningDTO() {
         return new InningDTO(
                 2,
-                "TOP",
+                InningType.TOP,
                 new TeamDTO.WithScore(1L, "Captain", 1),
                 new TeamDTO.WithScore(2L, "Marvel", 5),
                 new BaseState(false, true, true),

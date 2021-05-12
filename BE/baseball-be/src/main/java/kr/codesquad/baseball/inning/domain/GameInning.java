@@ -1,5 +1,6 @@
 package kr.codesquad.baseball.inning.domain;
 
+import kr.codesquad.baseball.inning.controller.InningType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
@@ -35,6 +36,10 @@ public class GameInning {
         return this;
     }
 
+    public int pitchCount() {
+        return currentPlateAppearance().pitchCount();
+    }
+
     public GameInning addNewPlateAppearanceBy(long hitterId) {
         plateAppearances.add(new PlateAppearance(hitterId, plateAppearances.size() + 1));
         return this;
@@ -45,13 +50,29 @@ public class GameInning {
         return this;
     }
 
+    public long currentHitterId() {
+        return currentPlateAppearance().getHitterId();
+    }
+
     public GameInning outCurrentHitter() {
         currentPlateAppearance().out();
         return this;
     }
 
+    public int currentHitterPlateAppearanceNumber() {
+        return currentPlateAppearance().getPlateAppearanceNumber();
+    }
+
     public PlateAppearance currentPlateAppearance() {
         return plateAppearances.get(plateAppearances.size() - 1);
+    }
+
+    public InningType inningTypeBy(long homeTeamId) {
+        if (teamId == homeTeamId) {
+            return InningType.BOTTOM;
+        }
+
+        return InningType.TOP;
     }
 
     public Long getId() {
@@ -80,6 +101,10 @@ public class GameInning {
 
     public List<PlateAppearance> getPlateAppearances() {
         return plateAppearances;
+    }
+
+    public BaseState getBaseState() {
+        return baseState;
     }
 
     @Override

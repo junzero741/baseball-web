@@ -1,5 +1,7 @@
 package kr.codesquad.baseball.player;
 
+import kr.codesquad.baseball.player.domain.Player;
+
 public class PlayerDTO {
     private long id;
     private String name;
@@ -25,6 +27,10 @@ public class PlayerDTO {
             this.pitchCount = pitchCount;
         }
 
+        public static Pitcher of(Player player, int pitchCount) {
+            return new Pitcher(player.getId(), player.getName(), pitchCount);
+        }
+
         public int getPitchCount() {
             return pitchCount;
         }
@@ -40,6 +46,10 @@ public class PlayerDTO {
             this.battingOrder = battingOrder;
             this.plateAppearanceCount = plateAppearanceCount;
             this.hitCount = hitCount;
+        }
+
+        public static Hitter of(Player player, int battingOrder, int plateAppearanceCount, int hitCount) {
+            return new Hitter(player.getId(), player.getName(), battingOrder, plateAppearanceCount, hitCount);
         }
 
         public int getBattingOrder() {

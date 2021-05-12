@@ -32,6 +32,10 @@ public class PlayerOnTeam {
         return playerId;
     }
 
+    public int getHitterOrder() {
+        return hitterOrder;
+    }
+
     @Override
     public String toString() {
         return "TeamHasPlayer{" +

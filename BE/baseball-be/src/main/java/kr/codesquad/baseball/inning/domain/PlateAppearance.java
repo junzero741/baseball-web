@@ -5,6 +5,7 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlateAppearance {
     @Id
@@ -26,6 +27,18 @@ public class PlateAppearance {
         return this;
     }
 
+    public int pitchCount() {
+        return latestPitch().getPitchNumber();
+    }
+
+    public Pitch latestPitch() {
+        return pitches.get(pitches.size() - 1);
+    }
+
+    public List<PitchResult> pitchResults() {
+        return pitches.stream().map(Pitch::getResult).collect(Collectors.toList());
+    }
+
     public void out() {
         isOut = true;
     }
@@ -34,12 +47,20 @@ public class PlateAppearance {
         return id;
     }
 
+    public long getHitterId() {
+        return hitterId;
+    }
+
     public int getPlateAppearanceNumber() {
         return plateAppearanceNumber;
     }
 
     public boolean isOut() {
         return isOut;
+    }
+
+    public List<Pitch> getPitches() {
+        return pitches;
     }
 
     @Override
