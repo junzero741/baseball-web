@@ -4,7 +4,7 @@ import kr.codesquad.baseball.game.controller.GameDTO;
 import kr.codesquad.baseball.game.controller.GameScoresDTO;
 import kr.codesquad.baseball.game.controller.LineUpDTO;
 import kr.codesquad.baseball.game.controller.PlayerStatus;
-import kr.codesquad.baseball.inning.BaseState;
+import kr.codesquad.baseball.inning.domain.BaseState;
 import kr.codesquad.baseball.inning.HitterRecord;
 import kr.codesquad.baseball.inning.InningDTO;
 import kr.codesquad.baseball.player.PlayerDTO;

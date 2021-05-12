@@ -1,5 +1,6 @@
 package kr.codesquad.baseball.inning;
 
+import kr.codesquad.baseball.inning.domain.BaseState;
 import kr.codesquad.baseball.player.PlayerDTO;
 import kr.codesquad.baseball.team.TeamDTO;
 

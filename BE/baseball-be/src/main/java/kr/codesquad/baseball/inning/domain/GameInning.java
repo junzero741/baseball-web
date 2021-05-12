@@ -1,6 +1,7 @@
 package kr.codesquad.baseball.inning.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import java.util.ArrayList;
@@ -16,6 +17,9 @@ public class GameInning {
 
     @MappedCollection(idColumn = "GAME_INNING_ID", keyColumn = "PLATE_APPEARANCE_NUMBER")
     private List<PlateAppearance> plateAppearances = new ArrayList<>();
+
+    @Column("GAME_INNING_ID")
+    private BaseState baseState = new BaseState();
 
     public GameInning(int inning, long gameId, long teamId) {
         this.inning = inning;
@@ -81,6 +85,7 @@ public class GameInning {
                 ", teamId=" + teamId +
                 ", score=" + score +
                 ", plateAppearances=" + plateAppearances +
+                ", baseState=" + baseState +
                 '}';
     }
 }

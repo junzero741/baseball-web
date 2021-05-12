@@ -75,19 +75,19 @@ CREATE TABLE IF NOT EXISTS `baseball`.`game_inning` (
 
 
 -- -----------------------------------------------------
--- Table `baseball`.`base_info`
+-- Table `baseball`.`base_state`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `baseball`.`base_info` ;
+DROP TABLE IF EXISTS `baseball`.`base_state` ;
 
-CREATE TABLE IF NOT EXISTS `baseball`.`base_info` (
-                                                      `game_id` INT NOT NULL,
-                                                      `first_base` BOOLEAN NULL,
-                                                      `second_base` BOOLEAN NULL,
-                                                      `third_base` BOOLEAN NULL,
-                                                      PRIMARY KEY (`game_id`),
-    CONSTRAINT `fk_base_info_game1`
-    FOREIGN KEY (`game_id`)
-    REFERENCES `baseball`.`game` (`id`)
+CREATE TABLE IF NOT EXISTS `baseball`.`base_state` (
+                                                       `game_inning_id` INT NOT NULL,
+                                                       `first_base` BOOLEAN NULL,
+                                                       `second_base` BOOLEAN NULL,
+                                                       `third_base` BOOLEAN NULL,
+                                                       PRIMARY KEY (`game_inning_id`),
+    CONSTRAINT `fk_base_info_game_inning1`
+    FOREIGN KEY (`game_inning_id`)
+    REFERENCES `baseball`.`game_inning` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB;
