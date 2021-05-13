@@ -14,14 +14,12 @@ const delayList = {
 const Field = ({ data, userTeam, fetchData }) => {
 	const { inning, inningType, baseState, hitterRecords, awayTeam, homeTeam } = data;
 
-	const isOffence = (userTeam === "AWAY") ^ (inningType === "TOP") ? true : false;
+	const isOffence = (userTeam === "AWAY") ^ (inningType === "TOP") ? false : true;
 	const pitcherTeam = inningType === "TOP" ? homeTeam.id : awayTeam.id;
 
 	const [runnerList, setRunnerList] = useState([{ base: 0 }]);
 
-	
 	const [isPlaying, setPlaying] = useState(false);
-	// const [isFetching, setIsFetching] = useState(false);
 
 	const [pitchingStep, setpitchingStep] = useState("release");
 
@@ -32,7 +30,7 @@ const Field = ({ data, userTeam, fetchData }) => {
 	const isHit = () => {
 		if (hitterRecords.length === 1) return false;
 		if (hitterRecords[0].results.length !== 0) return false;
-		if (hitterRecords[1].results[hitterRecords[1].results.length - 1] !== "H") return false;
+		if (hitterRecords[1].results[hitterRecords[1].results.length - 1] !== "H" && hitterRecords[1].results.filter((el) => el === "B").length !== 4) return false;
 		return true;
 	};
 
@@ -48,9 +46,6 @@ const Field = ({ data, userTeam, fetchData }) => {
 	const arrive = () => setRunnerList((list) => [...list.map((el) => ({ ...el, isRunning: false }))]);
 
 	const play = async () => {
-		// console.log(isFetching)
-		// if (isFetching) return;
-		// setIsFetching(() => true);
 		await Promise.all([
 			fetchData(`https://baseball-ahpuh.herokuapp.com/games/1/pitch`, "POST", {
 				teamId: pitcherTeam,
@@ -58,7 +53,6 @@ const Field = ({ data, userTeam, fetchData }) => {
 			}),
 			pitch(["windup", "throwing", "release"]),
 		]);
-		// setIsFetching(() => false);
 	};
 
 	useEffect(() => {
@@ -69,11 +63,11 @@ const Field = ({ data, userTeam, fetchData }) => {
 	let timer = useRef(null);
 
 	useEffect(() => {
-		console.log("Polling trigged useEffect", isOffence)
+		console.log("Polling trigged useEffect", isOffence);
 		const polling = () => {
 			if (isOffence)
 				timer.current = setTimeout(() => {
-					console.log("played in polling!!!")
+					console.log("played in polling!!!");
 					play();
 					polling();
 				}, 3000);
@@ -82,8 +76,8 @@ const Field = ({ data, userTeam, fetchData }) => {
 		const clearPolling = () => {
 			if (!isOffence) clearTimeout(timer.current);
 			if (!isOffence) console.log("clear!!!!!");
-		}
-		clearPolling()
+		};
+		clearPolling();
 	}, [isOffence]);
 
 	//prettier-ignore
