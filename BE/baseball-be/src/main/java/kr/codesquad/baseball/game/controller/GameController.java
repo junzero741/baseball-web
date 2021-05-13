@@ -1,5 +1,6 @@
 package kr.codesquad.baseball.game.controller;
 
+import kr.codesquad.baseball.game.service.GameService;
 import kr.codesquad.baseball.utils.SampleDataFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,13 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class GameController {
+
+    private GameService gameService;
+
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
+    }
+
     @GetMapping("/games")
     public List<GameDTO> readAll() {
         return SampleDataFactory.gameReadAllResponses();
@@ -23,6 +31,6 @@ public class GameController {
 
     @GetMapping("/games/{id}/scores")
     public GameScoresDTO gameScores(@PathVariable long id) {
-        return SampleDataFactory.gameScores();
+        return gameService.scores(id);
     }
 }

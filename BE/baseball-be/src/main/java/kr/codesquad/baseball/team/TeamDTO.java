@@ -23,6 +23,10 @@ public class TeamDTO {
         return new WithScore(id, name, score);
     }
 
+    public WithScores withScores(List<Integer> scores) {
+        return new WithScores(id, name, scores);
+    }
+
     public long getId() {
         return id;
     }
