@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import delay from "../../../utils/delay/delay";
 import BallCount from "./BallCount";
+import getPitchResult from "../../../utils/getRandomPitchResult/getRandomPitchResult";
+import getRandomPitchResult from "../../../utils/getRandomPitchResult/getRandomPitchResult";
 
 const delayList = {
 	windup: 200,
@@ -10,11 +12,15 @@ const delayList = {
 	run: 400,
 };
 
-const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, fetchData }) => {
+const Field = ({ data, userTeam, fetchData }) => {
+	const { inning, inningType, baseState, hitterRecords, awayTeam, homeTeam } = data;
+
 	const isOffence = (userTeam === "AWAY") ^ (inningType === "TOP") ? "공격" : "수비";
+	const pitcherTeam = inningType === "TOP" ? homeTeam.id : awayTeam.id;
 
 	const [runnerList, setRunnerList] = useState([{ base: 0 }]);
 	const [isPlaying, setPlaying] = useState(false);
+	const [isFetching, setIsFetching] = useState(false);
 
 	const [pitchingStep, setpitchingStep] = useState("release");
 
@@ -23,6 +29,11 @@ const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, fetchDa
 	};
 
 	const hit = async () => {
+		if (hitterRecords.length === 1) return; // 공수교대
+		console.log(hitterRecords[0].results.length); // 안타를 쳤다면 첫타자 results length 0이겠지?
+		if (hitterRecords[0].results.length !== 0) return;
+		console.log(hitterRecords[1].results);
+		if (hitterRecords[1].results[hitterRecords[1].results.length - 1] !== "H") return;
 		setPlaying(() => true);
 		await delay(run, delayList.run);
 		arrive();
@@ -34,9 +45,20 @@ const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, fetchDa
 	const arrive = () => setRunnerList((list) => [...list.map((el) => ({ ...el, isRunning: false }))]);
 
 	const play = async () => {
-		await Promise.all[(fetchData(), pitch(["windup", "throwing", "release"]))];
-		await hit();
+		if (isFetching) return;
+		setIsFetching(() => true);
+		await Promise.all([fetchData(`https://baseball-ahpuh.herokuapp.com/games/1/pitch`, "POST", { teamId: pitcherTeam, pitchResult: "S" }), pitch(["windup", "throwing", "release"])]);
+		setIsFetching(() => false);
 	};
+
+	const clearBase = () => {
+		if (hitterRecords.length === 1 && hitterRecords[0].results.length === 0) setRunnerList(() => [{ base: 0 }]);
+	};
+
+	useEffect(() => {
+		clearBase();
+		hit();
+	}, [data]);
 	//prettier-ignore
 	return (
 		<StyledField>
@@ -45,7 +67,8 @@ const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, fetchDa
 			<Pitcher step={pitchingStep} />
 			{runnerList.map((el, i) => <Runner key={i} {...el} />)}
 			{isPlaying || <Batter src="image/batter.png" />}
-			{isOffence === "수비" && <PitchButton onClick={play}>PITCH</PitchButton>}
+			{/* {isOffence === "수비" && <PitchButton onClick={play}>PITCH</PitchButton>} */}
+			<PitchButton onClick={play}>PITCH</PitchButton>
 		</StyledField>
 	);
 };
