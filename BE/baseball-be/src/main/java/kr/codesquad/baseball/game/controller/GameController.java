@@ -26,7 +26,7 @@ public class GameController {
 
     @GetMapping("/games/{id}/lineup")
     public LineUpDTO lineUp(@PathVariable long id) {
-        return SampleDataFactory.lineUp();
+        return gameService.lineUp(id);
     }
 
     @GetMapping("/games/{id}/scores")

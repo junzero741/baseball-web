@@ -1,7 +1,5 @@
 package kr.codesquad.baseball.inning.controller;
 
-import kr.codesquad.baseball.player.PlayerDTO;
-
 import java.util.List;
 
 public class HitterRecord {

@@ -27,6 +27,10 @@ public class TeamDTO {
         return new WithScores(id, name, scores);
     }
 
+    public WithPlayerStatus withPlayerStatus(List<PlayerStatus> playerStatuses) {
+        return new WithPlayerStatus(id, name, playerStatuses);
+    }
+
     public long getId() {
         return id;
     }
