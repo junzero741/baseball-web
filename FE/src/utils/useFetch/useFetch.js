@@ -7,15 +7,14 @@ const useFetch = ({ url, initialValue }) => {
 		fetchData();
 	}, []);
 
-	const fetchData = async (method, body) => {
+	const fetchData = async (newUrl = url, method, body) => {
 		const header = {
 			method: method,
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(body),
 		};
-
 		try {
-			const response = method ? await fetch(url, header) : await fetch(url);
+			const response = method ? await fetch(newUrl, header) : await fetch(newUrl);
 			const json = await response.json();
 			setData(() => json);
 		} catch (error) {

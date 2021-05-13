@@ -3,11 +3,12 @@ import Score from "./Score";
 import Field from "./Field";
 
 const Ground = ({ data, fetchData, teamId }) => {
+	console.log(data);
 	const userTeam = data.awayTeam.id === teamId ? "AWAY" : "HOME";
 	return (
 		<StyledGround>
 			<Score {...data} userTeam={userTeam} />
-			<Field {...data} fetchData={fetchData} userTeam={userTeam} />
+			<Field data={data} fetchData={fetchData} userTeam={userTeam} />
 		</StyledGround>
 	);
 };
