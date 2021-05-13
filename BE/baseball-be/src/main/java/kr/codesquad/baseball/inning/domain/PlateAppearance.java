@@ -48,6 +48,10 @@ public class PlateAppearance {
         return pitches.stream().map(Pitch::getResult).collect(Collectors.toList());
     }
 
+    public boolean isHit() {
+        return latestPitch().getResult() == PitchResult.H;
+    }
+
     public void out() {
         isOut = true;
     }

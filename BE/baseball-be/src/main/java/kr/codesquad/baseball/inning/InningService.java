@@ -5,6 +5,7 @@ import kr.codesquad.baseball.game.service.GameService;
 import kr.codesquad.baseball.inning.controller.HitterRecord;
 import kr.codesquad.baseball.inning.controller.InningDTO;
 import kr.codesquad.baseball.inning.controller.InningType;
+import kr.codesquad.baseball.inning.domain.BaseState;
 import kr.codesquad.baseball.inning.domain.GameInning;
 import kr.codesquad.baseball.inning.domain.InningRepository;
 import kr.codesquad.baseball.inning.domain.PitchResult;
@@ -147,10 +148,44 @@ public class InningService {
 
             gameInning.addNewPlateAppearanceBy(nextHitterId);
             inningRepository.save(gameInning);
+
+            return readOne(gameId, teamId);
+        }
+
+        if (gameInning.currentPlateAppearance().isHit()) {
+            GameDTO gameDTO = gameService.readOne(gameId);
+            InningType inningType = gameInning.inningTypeBy(gameDTO.homeTeamId());
+
+            long attackTeamId = inningType == InningType.BOTTOM ? gameDTO.homeTeamId() : gameDTO.awayTeamId();
+
+            Team attackingTeam = teamRepository.findTeamById(attackTeamId);
+            int currentHitterOrder = attackingTeam.findPlayerBy(gameInning.currentHitterId()).getHitterOrder();
+
+            int nextHitterOrder = (currentHitterOrder + 1) % 9;
+
+            long nextHitterId = attackingTeam.getPlayers().stream()
+                    .filter(playerOnTeam -> playerOnTeam.getHitterOrder() == nextHitterOrder)
+                    .findAny()
+                    .orElseThrow(() -> new IllegalStateException("player 순서 조회 중 오류 발생 : " + attackingTeam))
+                    .getPlayerId();
+
+            BaseState baseState = gameInning.getBaseState();
+            if (baseState.isThirdBase()) {
+                gameInning.updateScore(gameInning.getScore() + 1);
+            } else if (baseState.isSecondBase()) {
+                baseState.setThirdBase(true);
+            } else if (baseState.isFirstBase()) {
+                baseState.setSecondBase(true);
+            } else {
+                baseState.setFirstBase(true);
+            }
+
+            gameInning.addNewPlateAppearanceBy(nextHitterId);
+
+            inningRepository.save(gameInning);
         }
 
         return readOne(gameId, teamId);
-
     }
 
     public int totalScoreOf(long gameId, long teamId) {

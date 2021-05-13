@@ -18,12 +18,24 @@ public class BaseState {
         return firstBase;
     }
 
+    public void setFirstBase(boolean firstBase) {
+        this.firstBase = firstBase;
+    }
+
     public boolean isSecondBase() {
         return secondBase;
     }
 
+    public void setSecondBase(boolean secondBase) {
+        this.secondBase = secondBase;
+    }
+
     public boolean isThirdBase() {
         return thirdBase;
+    }
+
+    public void setThirdBase(boolean thirdBase) {
+        this.thirdBase = thirdBase;
     }
 
     @Override
