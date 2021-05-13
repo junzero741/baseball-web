@@ -129,7 +129,7 @@ public class InningService {
                         .orElseThrow(() -> new IllegalStateException("player 순서 조회 중 오류 발생 : " + nextAttackingTeam))
                         .getPlayerId();
 
-                nextInning.addNewPlateAppearanceBy(nextHitterId);
+                nextInning.addNewPlateAppearanceBy(nextHitterId, gameService.plateAppearanceNumber(gameId, nextHitterId));
 
                 inningRepository.save(nextInning);
 
@@ -149,7 +149,7 @@ public class InningService {
                     .orElseThrow(() -> new IllegalStateException("player 순서 조회 중 오류 발생 : " + attackingTeam))
                     .getPlayerId();
 
-            gameInning.addNewPlateAppearanceBy(nextHitterId);
+            gameInning.addNewPlateAppearanceBy(nextHitterId, gameService.plateAppearanceNumber(gameId, nextHitterId));
             inningRepository.save(gameInning);
 
             return readOne(gameId, teamId);
@@ -188,7 +188,7 @@ public class InningService {
                 baseState.setFirstBase(true);
             }
 
-            gameInning.addNewPlateAppearanceBy(nextHitterId);
+            gameInning.addNewPlateAppearanceBy(nextHitterId, gameService.plateAppearanceNumber(gameId, nextHitterId));
 
             inningRepository.save(gameInning);
         }

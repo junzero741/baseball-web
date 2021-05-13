@@ -46,9 +46,13 @@ public class GameInning {
                 .count());
     }
 
-    public GameInning addNewPlateAppearanceBy(long hitterId) {
-        plateAppearances.add(new PlateAppearance(hitterId, plateAppearances.size() + 1));
+    public GameInning addNewPlateAppearanceBy(long hitterId, int plateAppearanceNumber) {
+        plateAppearances.add(new PlateAppearance(hitterId, plateAppearanceNumber + 1));
         return this;
+    }
+
+    public GameInning addNewPlateAppearanceBy(long hitterId) {
+        return addNewPlateAppearanceBy(hitterId, 0);
     }
 
     public GameInning updateScore(int score) {

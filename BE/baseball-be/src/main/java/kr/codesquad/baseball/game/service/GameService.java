@@ -68,4 +68,13 @@ public class GameService {
                 .mapToInt(Integer::valueOf)
                 .sum();
     }
+
+    public int plateAppearanceNumber(long gameId, long hitterId) {
+        GameWithInnings gameWithInnings = gameRepository.findGameWithInningsById(gameId);
+
+        return Math.toIntExact(gameWithInnings.getGameInnings().stream()
+                .flatMap(gameInning -> gameInning.getPlateAppearances().stream())
+                .filter(plateAppearance -> plateAppearance.getHitterId() == hitterId)
+                .count());
+    }
 }
