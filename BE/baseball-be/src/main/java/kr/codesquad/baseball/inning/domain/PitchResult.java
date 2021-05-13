@@ -13,6 +13,10 @@ public enum PitchResult {
         return pitchResult == S;
     }
 
+    public static boolean isBall(PitchResult pitchResult) {
+        return pitchResult == B;
+    }
+
     public String description() {
         return description;
     }

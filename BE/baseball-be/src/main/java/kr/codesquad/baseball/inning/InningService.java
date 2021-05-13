@@ -155,7 +155,11 @@ public class InningService {
             return readOne(gameId, teamId);
         }
 
-        if (gameInning.currentPlateAppearance().isHit()) {
+        long ballCount = gameInning.currentPlateAppearance().pitchResults().stream()
+                .filter(PitchResult::isBall)
+                .count();
+
+        if (gameInning.currentPlateAppearance().isHit() || ballCount == 4) {
             GameDTO gameDTO = gameService.readOne(gameId);
             InningType inningType = gameInning.inningTypeBy(gameDTO.homeTeamId());
 
