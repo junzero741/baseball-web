@@ -1,12 +1,16 @@
 package kr.codesquad.baseball.inning.controller;
 
 import kr.codesquad.baseball.inning.InningService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 public class InningController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private InningService inningService;
 
@@ -23,6 +27,11 @@ public class InningController {
     @PostMapping("/games/{id}/pitch")
     @ResponseStatus(HttpStatus.CREATED)
     public InningDTO pitch(@PathVariable long id, @RequestBody PitchRequest pitchRequest) {
-        return inningService.pitch(id, pitchRequest.getTeamId(), pitchRequest.getPitchResult());
+        try {
+            return inningService.pitch(id, pitchRequest.getTeamId(), pitchRequest.getPitchResult());
+        } catch (Exception e) {
+            logger.error("id : {}, pitchRequest : {}, e {}", id, pitchRequest, e, e);
+        }
+        return null;
     }
 }
