@@ -19,6 +19,7 @@ public class InningController {
         return inningService.readOne(id, teamId);
     }
 
+    //TODO: api 규격 스트릭트하게 검사하도록 수정
     @PostMapping("/games/{id}/pitch")
     @ResponseStatus(HttpStatus.CREATED)
     public InningDTO pitch(@PathVariable long id, @RequestBody PitchRequest pitchRequest) {

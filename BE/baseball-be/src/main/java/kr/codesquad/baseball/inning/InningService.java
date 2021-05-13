@@ -121,7 +121,7 @@ public class InningService {
 
                 Team nextAttackingTeam = teamRepository.findTeamById(teamId);
                 int currentHitterOrder = nextAttackingTeam.findPlayerBy(lastInning.currentHitterId()).getHitterOrder();
-                int nextHitterOrder = (currentHitterOrder + 1) % 9;
+                int nextHitterOrder = currentHitterOrder % 9 + 1;
 
                 long nextHitterId = nextAttackingTeam.getPlayers().stream()
                         .filter(playerOnTeam -> playerOnTeam.getHitterOrder() == nextHitterOrder)
@@ -141,7 +141,7 @@ public class InningService {
             Team attackingTeam = teamRepository.findTeamById(attackTeamId);
             int currentHitterOrder = attackingTeam.findPlayerBy(gameInning.currentHitterId()).getHitterOrder();
 
-            int nextHitterOrder = (currentHitterOrder + 1) % 9;
+            int nextHitterOrder = currentHitterOrder % 9 + 1;
 
             long nextHitterId = attackingTeam.getPlayers().stream()
                     .filter(playerOnTeam -> playerOnTeam.getHitterOrder() == nextHitterOrder)
@@ -164,7 +164,7 @@ public class InningService {
             Team attackingTeam = teamRepository.findTeamById(attackTeamId);
             int currentHitterOrder = attackingTeam.findPlayerBy(gameInning.currentHitterId()).getHitterOrder();
 
-            int nextHitterOrder = (currentHitterOrder + 1) % 9;
+            int nextHitterOrder = currentHitterOrder % 9 + 1;
 
             long nextHitterId = attackingTeam.getPlayers().stream()
                     .filter(playerOnTeam -> playerOnTeam.getHitterOrder() == nextHitterOrder)
