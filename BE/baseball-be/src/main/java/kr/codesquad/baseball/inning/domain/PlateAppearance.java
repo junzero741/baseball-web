@@ -49,6 +49,10 @@ public class PlateAppearance {
     }
 
     public boolean isHit() {
+        if (pitches.size() == 0) {
+            return false;
+        }
+
         return latestPitch().getResult() == PitchResult.H;
     }
 
