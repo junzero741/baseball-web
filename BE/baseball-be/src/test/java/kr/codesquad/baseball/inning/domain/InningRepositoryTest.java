@@ -48,8 +48,8 @@ class InningRepositoryTest {
         firstInning.addNewPlateAppearanceBy(1L);
 
         inningRepository.save(firstInning);
-        inningRepository.save(firstInning.pitch(PitchResult.STRIKE));
-        inningRepository.save(firstInning.pitch(PitchResult.STRIKE));
+        inningRepository.save(firstInning.pitch(PitchResult.S));
+        inningRepository.save(firstInning.pitch(PitchResult.S));
     }
 
     @Test
@@ -76,12 +76,12 @@ class InningRepositoryTest {
         firstInning.addNewPlateAppearanceBy(1L);
 
         inningRepository.save(firstInning);
-        inningRepository.save(firstInning.pitch(PitchResult.STRIKE));
-        inningRepository.save(firstInning.pitch(PitchResult.STRIKE));
-        inningRepository.save(firstInning.pitch(PitchResult.HIT));
+        inningRepository.save(firstInning.pitch(PitchResult.S));
+        inningRepository.save(firstInning.pitch(PitchResult.S));
+        inningRepository.save(firstInning.pitch(PitchResult.H));
 
         firstInning.addNewPlateAppearanceBy(1L);
-        inningRepository.save(firstInning.pitch(PitchResult.HIT));
+        inningRepository.save(firstInning.pitch(PitchResult.H));
 
         assertThat(inningRepository.hitCountOf(1L, 1L)).isEqualTo(2);
     }

@@ -22,6 +22,6 @@ public interface InningRepository extends CrudRepository<GameInning, Long> {
             "JOIN PITCH P ON P.PLATE_APPEARANCE_ID = PA.ID  " +
             "WHERE GI.GAME_ID = :gameId " +
             "AND PA.HITTER_ID = :hitterId " +
-            "AND P.RESULT = 'HIT'")
+            "AND P.RESULT = 'H'")
     int hitCountOf(@Param("gameId") long gameId, @Param("hitterId") long hitterId);
 }

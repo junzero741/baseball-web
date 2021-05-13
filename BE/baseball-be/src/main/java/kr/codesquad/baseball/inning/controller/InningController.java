@@ -1,6 +1,7 @@
 package kr.codesquad.baseball.inning.controller;
 
 import kr.codesquad.baseball.inning.InningService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,5 +17,12 @@ public class InningController {
     @GetMapping("/games/{id}")
     public InningDTO readBy(@PathVariable long id, @RequestParam long teamId) {
         return inningService.readOne(id, teamId);
+    }
+
+    @PostMapping("/games/{id}/pitch")
+    @ResponseStatus(HttpStatus.CREATED)
+    public InningDTO pitch(@PathVariable long id, @RequestBody PitchRequest pitchRequest) {
+        inningService.pitch(id, pitchRequest.getTeamId(), pitchRequest.getPitchResult());
+        return inningService.readOne(id, pitchRequest.getTeamId());
     }
 }

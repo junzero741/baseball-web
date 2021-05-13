@@ -65,7 +65,7 @@ public class InningService {
                         plateAppearance.getHitterId(),
                         attackingTeam.findPlayerBy(plateAppearance.getHitterId()).getHitterOrder(),
                         playerRepository.findPlayerById(plateAppearance.getHitterId()).getName(),
-                        plateAppearance.pitchResults().stream().map(PitchResult::symbol).collect(Collectors.toList()),
+                        plateAppearance.pitchResults().stream().map(PitchResult::name).collect(Collectors.toList()),
                         plateAppearance.isOut()
                 )).collect(Collectors.toList());
 
@@ -81,6 +81,12 @@ public class InningService {
                 .build();
 
         return inningDTO;
+    }
+
+    public void pitch(long gameId, long teamId, PitchResult pitchResult) {
+        GameInning gameInning = inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc(gameId, teamId);
+        gameInning.pitch(pitchResult);
+        inningRepository.save(gameInning);
     }
 
     public int totalScoreOf(long gameId, long teamId) {

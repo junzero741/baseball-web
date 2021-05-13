@@ -1,15 +1,22 @@
 package kr.codesquad.baseball.inning.domain;
 
 public enum PitchResult {
-    STRIKE("S"), BALL("B"), HIT("H");
+    S("Strike"), B("Ball"), H("Hit");
 
-    private String symbol;
+    private String description;
 
-    PitchResult(String symbol) {
-        this.symbol = symbol;
+    PitchResult(String description) {
+        this.description = description;
     }
 
-    public String symbol() {
-        return symbol;
+    public String description() {
+        return description;
+    }
+
+    @Override
+    public String toString() {
+        return "PitchResult{" +
+                "description='" + description + '\'' +
+                '}';
     }
 }
