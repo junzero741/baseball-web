@@ -11,13 +11,13 @@ const Home = () => {
 	const handleOnClick = async (provider) => {
 		const res = await socialMediaAuth(provider);
 		if (res.email) {
+			console.log(res);
 			setLoginStatus(true);
 			setUserId(getId(res.email));
 		}
 	};
-	const getId = (email) => email.split("@")[0]
+	const getId = (email) => email.split("@")[0];
 
-	
 	return (
 		<Wrapper>
 			<StyledHome loginStatus={loginStatus}>
@@ -64,7 +64,7 @@ const SelectTeam = styled.button`
 	position: absolute;
 	top: 45%;
 	left: 50%;
-  transform:translateX(-50%);
+	transform: translateX(-50%);
 	width: 310px;
 	height: 138px;
 	font-size: 30px;
