@@ -81,7 +81,7 @@ class InningRepositoryTest {
         inningRepository.save(firstInning.pitch(PitchResult.S));
         inningRepository.save(firstInning.pitch(PitchResult.H));
 
-        firstInning.addNewPlateAppearanceBy(1L);
+        firstInning.addNewPlateAppearanceBy(1L, 1);
         inningRepository.save(firstInning.pitch(PitchResult.H));
 
         assertThat(inningRepository.hitCountOf(1L, 1L)).isEqualTo(2);
