@@ -17,6 +17,7 @@ import kr.codesquad.baseball.team.domain.Team;
 import kr.codesquad.baseball.team.domain.TeamRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,6 +70,8 @@ public class InningService {
                         plateAppearance.pitchResults().stream().map(PitchResult::name).collect(Collectors.toList()),
                         plateAppearance.isOut()
                 )).collect(Collectors.toList());
+
+        Collections.reverse(hitterRecords);
 
         InningDTO inningDTO = InningDTO.builder()
                 .inning(gameInning.getInning())
