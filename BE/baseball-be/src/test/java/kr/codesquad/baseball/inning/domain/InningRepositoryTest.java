@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,6 +23,11 @@ class InningRepositoryTest {
         GameInning secondInning = inningRepository.save(new GameInning(2, 1L, 1L, 1L));
 
         inningRepository.save(secondInning.updateScore(1));
+    }
+
+    @Test
+    void findTopByIdOrderByInningDesc() {
+        new ArrayDeque<>(inningRepository.findAllById(1L));
     }
 
     @Test

@@ -17,7 +17,9 @@ import kr.codesquad.baseball.team.domain.Team;
 import kr.codesquad.baseball.team.domain.TeamRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +36,16 @@ public class InningService {
         this.teamRepository = teamRepository;
         this.gameService = gameService;
         this.playerRepository = playerRepository;
+    }
+
+    public InningDTO readBy(long gameId, long teamId) {
+        GameDTO gameDTO = gameService.readOne(gameId);
+
+        if (inningRepository.findTopByGameIdOrderByIdDesc(gameId).getTeamId() == teamId) {
+            return readOne(gameId, teamId);
+        }
+
+        return readOne(gameId, teamId == gameDTO.homeTeamId() ? gameDTO.awayTeamId() : gameDTO.homeTeamId());
     }
 
     public InningDTO readOne(long gameId, long teamId) {

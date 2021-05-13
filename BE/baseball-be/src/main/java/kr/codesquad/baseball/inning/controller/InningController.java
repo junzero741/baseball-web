@@ -20,7 +20,7 @@ public class InningController {
 
     @GetMapping("/games/{id}")
     public InningDTO readBy(@PathVariable long id, @RequestParam long teamId) {
-        return inningService.readOne(id, teamId);
+        return inningService.readBy(id, teamId);
     }
 
     //TODO: api 규격 스트릭트하게 검사하도록 수정
