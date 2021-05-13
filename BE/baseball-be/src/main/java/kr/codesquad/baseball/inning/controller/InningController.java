@@ -27,11 +27,6 @@ public class InningController {
     @PostMapping("/games/{id}/pitch")
     @ResponseStatus(HttpStatus.CREATED)
     public InningDTO pitch(@PathVariable long id, @RequestBody PitchRequest pitchRequest) {
-        try {
-            return inningService.pitch(id, pitchRequest.getTeamId(), pitchRequest.getPitchResult());
-        } catch (Exception e) {
-            logger.error("id : {}, pitchRequest : {}, e {}", id, pitchRequest, e.getStackTrace(), e);
-        }
-        return null;
+        return inningService.pitch(id, pitchRequest.getTeamId(), pitchRequest.getPitchResult());
     }
 }

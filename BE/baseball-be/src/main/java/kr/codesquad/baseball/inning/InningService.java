@@ -4,6 +4,7 @@ import kr.codesquad.baseball.game.controller.GameDTO;
 import kr.codesquad.baseball.game.service.GameService;
 import kr.codesquad.baseball.inning.controller.HitterRecord;
 import kr.codesquad.baseball.inning.controller.InningDTO;
+import kr.codesquad.baseball.inning.controller.InningEndedException;
 import kr.codesquad.baseball.inning.controller.InningType;
 import kr.codesquad.baseball.inning.domain.BaseState;
 import kr.codesquad.baseball.inning.domain.GameInning;
@@ -17,9 +18,7 @@ import kr.codesquad.baseball.team.domain.Team;
 import kr.codesquad.baseball.team.domain.TeamRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayDeque;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,11 +49,6 @@ public class InningService {
 
     public InningDTO readOne(long gameId, long teamId) {
         GameInning gameInning = inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc(gameId, teamId);
-        if (gameInning == null) {
-            //TODO: 누가 투수인지 확인 필요
-            //TODO: save가 여기서 이뤄지면 안 됨
-            gameInning = inningRepository.save(new GameInning(1, gameId, teamId, 10L));
-        }
 
         GameDTO gameDTO = gameService.readOne(gameId);
         InningType inningType = gameInning.inningTypeBy(gameDTO.homeTeamId());
@@ -142,6 +136,10 @@ public class InningService {
                         .getPlayerId();
 
                 nextInning.addNewPlateAppearanceBy(nextHitterId, gameService.plateAppearanceNumber(gameId, nextHitterId));
+
+                if (inningRepository.existsByGameIdAndTeamIdAndInning(gameId, nextInning.getTeamId(), nextInning.getInning())) {
+                    throw new InningEndedException("gameId : " + gameId + ", teamId : " + teamId + ", pitchResult : " + pitchResult);
+                }
 
                 inningRepository.save(nextInning);
 

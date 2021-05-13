@@ -4,12 +4,11 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface InningRepository extends CrudRepository<GameInning, Long> {
 
-    Collection<GameInning> findAllByGameId(long id);
+    boolean existsByGameIdAndTeamIdAndInning(long gameId, long teamId, int inning);
 
     GameInning findTopByGameIdOrderByIdDesc(long id);
 
