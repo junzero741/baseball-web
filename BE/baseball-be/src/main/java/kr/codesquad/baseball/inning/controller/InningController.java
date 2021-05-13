@@ -30,7 +30,7 @@ public class InningController {
         try {
             return inningService.pitch(id, pitchRequest.getTeamId(), pitchRequest.getPitchResult());
         } catch (Exception e) {
-            logger.error("id : {}, pitchRequest : {}, e {}", id, pitchRequest, e, e);
+            logger.error("id : {}, pitchRequest : {}, e {}", id, pitchRequest, e.getStackTrace(), e);
         }
         return null;
     }

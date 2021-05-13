@@ -30,4 +30,12 @@ public class PitchRequest {
     public PitchResult getPitchResult() {
         return pitchResult;
     }
+
+    @Override
+    public String toString() {
+        return "PitchRequest{" +
+                "teamId=" + teamId +
+                ", pitchResult=" + pitchResult +
+                '}';
+    }
 }
