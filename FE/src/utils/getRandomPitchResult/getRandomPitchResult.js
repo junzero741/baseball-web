@@ -2,7 +2,7 @@ const getRandomPitchResult = () => {
   let result;
   const num = parseInt(Math.random() * 10); // 0~9
   if (num >= 0 && num <= 1) result = 'B';
-  else if (num >= 2 && num <= 8) result = 'S';
+  else if (num >= 2 && num <= 7) result = 'S';
   else result = 'H';
 
   return result;
