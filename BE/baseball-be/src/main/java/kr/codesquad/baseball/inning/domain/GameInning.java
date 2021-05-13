@@ -53,9 +53,8 @@ public class GameInning {
         return currentPlateAppearance().getHitterId();
     }
 
-    public GameInning outCurrentHitter() {
-        currentPlateAppearance().out();
-        return this;
+    public boolean isCurrentHitterOut() {
+        return currentPlateAppearance().isOut();
     }
 
     public int currentHitterPlateAppearanceNumber() {

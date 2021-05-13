@@ -38,7 +38,8 @@ class InningRepositoryTest {
         firstInning.addNewPlateAppearanceBy(1L);
 
         inningRepository.save(firstInning);
-        inningRepository.save(firstInning.outCurrentHitter());
+        firstInning.currentPlateAppearance().out();
+        inningRepository.save(firstInning);
         inningRepository.save(firstInning.addNewPlateAppearanceBy(2L));
     }
 

@@ -57,7 +57,7 @@ public class InningService {
         long attackTeamId = inningType == InningType.BOTTOM ? homeTeam.getId() : awayTeam.getId();
 
         Team attackingTeam = teamRepository.findTeamById(attackTeamId);
-        int currentHitterOrder = attackingTeam.getPlayers().get(attackingTeam.findPlayerBy(hitter.getId()).getHitterOrder()).getHitterOrder();
+        int currentHitterOrder = attackingTeam.findPlayerBy(hitter.getId()).getHitterOrder();
         int hitCount = inningRepository.hitCountOf(gameId, hitter.getId());
 
         List<HitterRecord> hitterRecords = gameInning.getPlateAppearances().stream()
@@ -83,10 +83,74 @@ public class InningService {
         return inningDTO;
     }
 
-    public void pitch(long gameId, long teamId, PitchResult pitchResult) {
+    public InningDTO pitch(long gameId, long teamId, PitchResult pitchResult) {
         GameInning gameInning = inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc(gameId, teamId);
         gameInning.pitch(pitchResult);
         inningRepository.save(gameInning);
+
+        // Game에 들어가게 하는게 맞는 구조 같음
+        /*
+         * 전체 조회용과 하나 조회용의 베이스 하나 두고, 그거 상속받도록 하는 방법 고려해볼 수 있음
+         */
+        if (gameInning.isCurrentHitterOut()) {
+            GameDTO gameDTO = gameService.readOne(gameId);
+            InningType inningType = gameInning.inningTypeBy(gameDTO.homeTeamId());
+
+            if (gameInning.getPlateAppearances().stream().filter(plateAppearance -> plateAppearance.isOut()).count() == 3) {
+                long nextTeamId = gameDTO.homeTeamId() == teamId ? gameDTO.awayTeamId() : gameDTO.homeTeamId();
+
+                GameInning nextInning = new GameInning(
+                        inningType == InningType.BOTTOM ? gameInning.getInning() + 1 : gameInning.getInning(),
+                        gameId,
+                        nextTeamId,
+                        nextTeamId == gameDTO.homeTeamId() ? 6L : 10L
+                );
+
+                GameInning lastInning = inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc(gameId, nextTeamId);
+
+                if (lastInning == null) {
+                    //TODO: 누가 투수인지 확인 필요
+                    //TODO: save가 여기서 이뤄지면 안 됨
+                    inningRepository.save(new GameInning(1, gameId, nextTeamId, 10L).addNewPlateAppearanceBy(1L));
+                    return readOne(gameId, nextTeamId);
+                }
+
+                Team nextAttackingTeam = teamRepository.findTeamById(teamId);
+                int currentHitterOrder = nextAttackingTeam.findPlayerBy(lastInning.currentHitterId()).getHitterOrder();
+                int nextHitterOrder = (currentHitterOrder + 1) % 9;
+
+                long nextHitterId = nextAttackingTeam.getPlayers().stream()
+                        .filter(playerOnTeam -> playerOnTeam.getHitterOrder() == nextHitterOrder)
+                        .findAny()
+                        .orElseThrow(() -> new IllegalStateException("player 순서 조회 중 오류 발생 : " + nextAttackingTeam))
+                        .getPlayerId();
+
+                nextInning.addNewPlateAppearanceBy(nextHitterId);
+
+                inningRepository.save(nextInning);
+
+                return readOne(gameId, nextTeamId);
+            }
+
+            long attackTeamId = inningType == InningType.BOTTOM ? gameDTO.homeTeamId() : gameDTO.awayTeamId();
+
+            Team attackingTeam = teamRepository.findTeamById(attackTeamId);
+            int currentHitterOrder = attackingTeam.findPlayerBy(gameInning.currentHitterId()).getHitterOrder();
+
+            int nextHitterOrder = (currentHitterOrder + 1) % 9;
+
+            long nextHitterId = attackingTeam.getPlayers().stream()
+                    .filter(playerOnTeam -> playerOnTeam.getHitterOrder() == nextHitterOrder)
+                    .findAny()
+                    .orElseThrow(() -> new IllegalStateException("player 순서 조회 중 오류 발생 : " + attackingTeam))
+                    .getPlayerId();
+
+            gameInning.addNewPlateAppearanceBy(nextHitterId);
+            inningRepository.save(gameInning);
+        }
+
+        return readOne(gameId, teamId);
+
     }
 
     public int totalScoreOf(long gameId, long teamId) {

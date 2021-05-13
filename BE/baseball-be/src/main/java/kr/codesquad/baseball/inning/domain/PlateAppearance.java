@@ -23,7 +23,12 @@ public class PlateAppearance {
     }
 
     public PlateAppearance pitch(long pitcherId, PitchResult pitchResult) {
-        pitches.add(new Pitch(pitcherId, pitches.size() + 1, pitchResult));
+        pitches.add(new Pitch(pitcherId, pitchCount() + 1, pitchResult));
+
+        if (pitchResults().stream().filter(PitchResult::isStrike).count() == 3) {
+            isOut = true;
+        }
+
         return this;
     }
 

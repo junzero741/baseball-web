@@ -9,6 +9,10 @@ public enum PitchResult {
         this.description = description;
     }
 
+    public static boolean isStrike(PitchResult pitchResult) {
+        return pitchResult == S;
+    }
+
     public String description() {
         return description;
     }

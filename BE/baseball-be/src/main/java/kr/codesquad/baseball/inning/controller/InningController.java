@@ -22,7 +22,6 @@ public class InningController {
     @PostMapping("/games/{id}/pitch")
     @ResponseStatus(HttpStatus.CREATED)
     public InningDTO pitch(@PathVariable long id, @RequestBody PitchRequest pitchRequest) {
-        inningService.pitch(id, pitchRequest.getTeamId(), pitchRequest.getPitchResult());
-        return inningService.readOne(id, pitchRequest.getTeamId());
+        return inningService.pitch(id, pitchRequest.getTeamId(), pitchRequest.getPitchResult());
     }
 }
