@@ -47,7 +47,7 @@ const Field = ({ data, userTeam, fetchData }) => {
 	const play = async () => {
 		if (isFetching) return;
 		setIsFetching(() => true);
-		await Promise.all([fetchData(`https://baseball-ahpuh.herokuapp.com/games/1/pitch`, "POST", { teamId: pitcherTeam, pitchResult: "S" }), pitch(["windup", "throwing", "release"])]);
+		await Promise.all([fetchData(`https://baseball-ahpuh.herokuapp.com/games/1/pitch`, "POST", { teamId: pitcherTeam, pitchResult: getPitchResult() }), pitch(["windup", "throwing", "release"])]);
 		setIsFetching(() => false);
 	};
 

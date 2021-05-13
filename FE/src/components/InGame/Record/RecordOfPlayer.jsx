@@ -8,28 +8,40 @@ const RecordOfPlayer = ({ results }) => {
 	ballCnt.current = 0;
 	let consequnece = "진행중";
 
+	const getPlayerConsquence = (pitchType) => {
+		const consequence = {
+			FOUR_BALL: "진루!",
+			THREE_STRIKE: "아웃!",
+			HIT: "안타!",
+		};
+		return consequence[pitchType];
+	};
+
+	const finalResult = (result) => {
+		console.log(`strike: ${strikeCnt.current} ball: ${ballCnt.current}`);
+		if (ballCnt.current === 4) {
+			consequnece = getPlayerConsquence("FOUR_BALL");
+		} else if (strikeCnt.current === 3) {
+			consequnece = getPlayerConsquence("THREE_STRIKE");
+		} else if (result === "H") {
+			consequnece = getPlayerConsquence("HIT");
+		}
+	};
 	const recordList = results.map((result, idx) => {
-		const type = {
+		const pitchType = {
 			B: "볼",
 			S: "스트라이크",
+			H: "안타",
 		};
+		// result === "B" ? (ballCnt.current += 1) : (strikeCnt.current += 1);
 
-		result === "B" ? (ballCnt.current += 1) : (strikeCnt.current += 1);
-
-		const finalResult = () => {
-			if (ballCnt.current === 4) {
-				consequnece = getPlayerConsquence("FOUR_BALL");
-			} else if (strikeCnt.current === 3) {
-				consequnece = getPlayerConsquence("THREE_STRIKE");
-			} else {
-				consequnece = getPlayerConsquence("HIT");
-			}
-		};
-		finalResult();
+		if (result === "B") ballCnt.current += 1;
+		else if (result === "S") strikeCnt.current += 1;
+		if (idx === results.length - 1) finalResult(result);
 
 		return (
-			<Record key={idx}>
-				<Idx>{idx + 1}</Idx> <Type>{type[result]}</Type>
+			<Record key={10 * idx}>
+				<Idx>{idx + 1}</Idx> <Type>{pitchType[result]}</Type>
 				<Counter>
 					<BallCnt>{ballCnt.current}</BallCnt>
 					<StrikeCnt>{strikeCnt.current}</StrikeCnt>
@@ -37,6 +49,7 @@ const RecordOfPlayer = ({ results }) => {
 			</Record>
 		);
 	});
+
 	return (
 		<StyledRecordOfPlayer>
 			<Result>{consequnece}</Result>
@@ -46,15 +59,6 @@ const RecordOfPlayer = ({ results }) => {
 };
 
 export default RecordOfPlayer;
-
-const getPlayerConsquence = (type) => {
-	const consequence = {
-		FOUR_BALL: "진루!",
-		THREE_STRIKE: "아웃!",
-		HIT: "안타!",
-	};
-	return consequence[type];
-};
 
 const StyledRecordOfPlayer = styled.div`
 	width: 100%;
