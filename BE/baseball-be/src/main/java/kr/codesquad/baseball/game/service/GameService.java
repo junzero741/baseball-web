@@ -52,8 +52,8 @@ public class GameService {
         TeamDTO homeTeam = gameDTO.getHomeTeam();
         TeamDTO awayTeam = gameDTO.getAwayTeam();
 
-        List<Integer> homeTeamScores = inningRepository.findAllScoresBy(gameId, homeTeam.getId());
-        List<Integer> awayTeamScores = inningRepository.findAllScoresBy(gameId, awayTeam.getId());
+        List<Integer> homeTeamScores = inningRepository.findAllScoresBy(gameId, awayTeam.getId());
+        List<Integer> awayTeamScores = inningRepository.findAllScoresBy(gameId, homeTeam.getId());
 
         GameScoresDTO gameScoresDTO = new GameScoresDTO(homeTeam.withScores(homeTeamScores), awayTeam.withScores(awayTeamScores));
 

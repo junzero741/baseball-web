@@ -177,6 +177,7 @@ public class InningService {
                     .getPlayerId();
 
             BaseState baseState = gameInning.getBaseState();
+            // TODO: 수비 팀이 아닌, 공격팀 득점을 올려줘야한다.
             if (baseState.isThirdBase()) {
                 gameInning.updateScore(gameInning.getScore() + 1);
             } else if (baseState.isSecondBase()) {
