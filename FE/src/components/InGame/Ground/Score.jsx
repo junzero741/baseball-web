@@ -6,9 +6,9 @@ const Score = ({homeTeam, awayTeam}) => {
 			<Title>BASEBALL GAME ONLINE</Title>
 			<Team>
 				<TeamName>{awayTeam.name}</TeamName>
-				<TeamScore>{awayTeam.score}</TeamScore>
-				vs
 				<TeamScore>{homeTeam.score}</TeamScore>
+				vs
+				<TeamScore>{awayTeam.score}</TeamScore>
 				<TeamName>{homeTeam.name}</TeamName>
 			</Team>
 		</StyledScore>

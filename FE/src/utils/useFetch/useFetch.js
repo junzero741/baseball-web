@@ -15,6 +15,7 @@ const useFetch = ({ url, initialValue }) => {
 		};
 		try {
 			const response = method ? await fetch(newUrl, header) : await fetch(newUrl);
+			if (!response.ok) throw new Error(response);
 			const json = await response.json();
 			setData(() => json);
 		} catch (error) {

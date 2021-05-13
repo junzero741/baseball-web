@@ -3,7 +3,6 @@ import Score from "./Score";
 import Field from "./Field";
 
 const Ground = ({ data, fetchData, teamId }) => {
-	console.log(data);
 	const userTeam = data.awayTeam.id === teamId ? "AWAY" : "HOME";
 	return (
 		<StyledGround>
