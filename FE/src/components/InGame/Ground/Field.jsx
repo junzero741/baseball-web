@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import delay from "../../../utils/delay/delay";
 import BallCount from "./BallCount";
+import getRandomPitchResult from "../../../utils/getRandomPitchResult/getRandomPitchResult";
 
 const delayList = {
 	windup: 200,
@@ -10,16 +11,27 @@ const delayList = {
 	run: 400,
 };
 
-const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, fetchData }) => {
-	const isOffence = (userTeam === "AWAY") ^ (inningType === "TOP") ? "공격" : "수비";
+const Field = ({ data, userTeam, fetchData }) => {
+	const { inning, inningType, baseState, hitterRecords, awayTeam, homeTeam } = data;
+
+	const isOffence = (userTeam === "AWAY") ^ (inningType === "TOP") ? false : true;
+	const pitcherTeam = inningType === "TOP" ? homeTeam.id : awayTeam.id;
 
 	const [runnerList, setRunnerList] = useState([{ base: 0 }]);
+
 	const [isPlaying, setPlaying] = useState(false);
 
 	const [pitchingStep, setpitchingStep] = useState("release");
 
 	const pitch = async (stepList) => {
 		for (let step of stepList) await delay(() => setpitchingStep(step), delayList[step]);
+	};
+
+	const isHit = () => {
+		if (hitterRecords.length === 1) return false;
+		if (hitterRecords[0].results.length !== 0) return false;
+		if (hitterRecords[1].results[hitterRecords[1].results.length - 1] !== "H" && hitterRecords[1].results.filter((el) => el === "B").length !== 4) return false;
+		return true;
 	};
 
 	const hit = async () => {
@@ -34,18 +46,51 @@ const Field = ({ inning, inningType, baseState, hitterRecords, userTeam, fetchDa
 	const arrive = () => setRunnerList((list) => [...list.map((el) => ({ ...el, isRunning: false }))]);
 
 	const play = async () => {
-		await Promise.all[(fetchData(), pitch(["windup", "throwing", "release"]))];
-		await hit();
+		await Promise.all([
+			fetchData(`https://baseball-ahpuh.herokuapp.com/games/1/pitch`, "POST", {
+				teamId: pitcherTeam,
+				pitchResult: getRandomPitchResult(),
+			}),
+			pitch(["windup", "throwing", "release"]),
+		]);
 	};
+
+	useEffect(() => {
+		if (hitterRecords.length === 1 && hitterRecords[0].results.length === 0) setRunnerList(() => [{ base: 0 }]);
+		if (isHit()) hit();
+	}, [data]);
+
+	let timer = useRef(null);
+
+	useEffect(() => {
+		console.log("Polling trigged useEffect", isOffence);
+		const polling = () => {
+			if (isOffence)
+				timer.current = setTimeout(() => {
+					console.log("played in polling!!!");
+					play();
+					polling();
+				}, 3000);
+		};
+		polling();
+		const clearPolling = () => {
+			if (!isOffence) clearTimeout(timer.current);
+			if (!isOffence) console.log("clear!!!!!");
+		};
+		clearPolling();
+	}, [isOffence]);
+
 	//prettier-ignore
 	return (
 		<StyledField>
 			<BallCount hitterRecords={hitterRecords} />
-			<CurrentInning>{inning}회{inningType==="TOP" ? "초" : "말"} {isOffence}</CurrentInning>
+			<CurrentInning>
+				{inning}회{inningType === "TOP" ? "초" : "말"} {isOffence ? "공격" : "수비"}
+			</CurrentInning>
 			<Pitcher step={pitchingStep} />
 			{runnerList.map((el, i) => <Runner key={i} {...el} />)}
 			{isPlaying || <Batter src="image/batter.png" />}
-			{isOffence === "수비" && <PitchButton onClick={play}>PITCH</PitchButton>}
+			{isOffence ? <AutoAttack>자동공격 진행중...</AutoAttack> : <PitchButton onClick={play}>PITCH</PitchButton>}
 		</StyledField>
 	);
 };
@@ -67,6 +112,21 @@ const PitchButton = styled.button`
 	left: 431px;
 	width: 100px;
 	height: 35px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background-color: rgba(0, 0, 0, 0.65);
+	color: #fff;
+`;
+const AutoAttack = styled.div`
+	position: absolute;
+	top: 507px;
+	left: 431px;
+	width: 100px;
+	height: 35px;
+	font-size: 12px;
 
 	display: flex;
 	align-items: center;

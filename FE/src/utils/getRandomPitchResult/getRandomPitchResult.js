@@ -1,9 +1,9 @@
 const getRandomPitchResult = () => {
   let result;
   const num = parseInt(Math.random() * 10); // 0~9
-  if (num >= 0 && num <= 4) result = 'BALL';
-  else if (num >= 5 && num <= 6) result = 'STRIKE';
-  else result = 'HIT';
+  if (num >= 0 && num <= 3) result = 'B';
+  else if (num >= 4 && num <= 8) result = 'S';
+  else result = 'H';
 
   return result;
 };

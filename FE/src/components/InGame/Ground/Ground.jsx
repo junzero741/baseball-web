@@ -7,7 +7,7 @@ const Ground = ({ data, fetchData, teamId }) => {
 	return (
 		<StyledGround>
 			<Score {...data} userTeam={userTeam} />
-			<Field {...data} fetchData={fetchData} userTeam={userTeam} />
+			<Field data={data} fetchData={fetchData} userTeam={userTeam} />
 		</StyledGround>
 	);
 };
