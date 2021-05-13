@@ -3,31 +3,17 @@ package kr.codesquad.baseball.game.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
-public class Game {
+public class GameBase {
     @Id
-    private Long id;
-    private GameStatus gameStatus;
+    protected Long id;
+    protected GameStatus gameStatus;
 
     @Column("GAME_ID")
-    private TeamParticipateGame teamParticipateGame;
+    protected TeamParticipateGame teamParticipateGame;
 
-    public Game(GameStatus gameStatus, TeamParticipateGame teamParticipateGame) {
+    public GameBase(GameStatus gameStatus, TeamParticipateGame teamParticipateGame) {
         this.gameStatus = gameStatus;
         this.teamParticipateGame = teamParticipateGame;
-    }
-
-    public static Game create(long id, GameStatus gameStatus, long homeTeamId, long awayTeamId) {
-        Game game = new Game(gameStatus, new TeamParticipateGame(homeTeamId, awayTeamId));
-        game.id = id;
-        return game;
-    }
-
-    public long homeTeamId() {
-        return teamParticipateGame.getHomeTeamId();
-    }
-
-    public long awayTeamId() {
-        return teamParticipateGame.getAwayTeamId();
     }
 
     public Long getId() {
@@ -44,7 +30,7 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Game{" +
+        return "GameBase{" +
                 "id=" + id +
                 ", gameStatus=" + gameStatus +
                 ", teamParticipateGame=" + teamParticipateGame +

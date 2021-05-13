@@ -1,6 +1,6 @@
 package kr.codesquad.baseball.utils;
 
-import kr.codesquad.baseball.game.domain.Game;
+import kr.codesquad.baseball.game.domain.GameWithoutInnings;
 import kr.codesquad.baseball.game.domain.GameRepository;
 import kr.codesquad.baseball.game.domain.GameStatus;
 import kr.codesquad.baseball.game.domain.TeamParticipateGame;
@@ -70,12 +70,12 @@ public class SampleDataRunner {
     @Order(30)
     public ApplicationRunner saveGame(GameRepository gameRepository, InningRepository inningRepository) {
         return args -> {
-            Game game = new Game(GameStatus.PLAYING, new TeamParticipateGame(1L, 2L));
+            GameWithoutInnings gameWithoutInnings = new GameWithoutInnings(GameStatus.PLAYING, new TeamParticipateGame(1L, 2L));
 
-            gameRepository.save(game);
+            gameRepository.save(gameWithoutInnings);
 
             // 게임 초기화 시 이닝도 함께 초기회돼야 함.
-            GameInning gameInning = new GameInning(1, game.getId(), game.homeTeamId(), 7L);
+            GameInning gameInning = new GameInning(1, gameWithoutInnings.getId(), gameWithoutInnings.homeTeamId(), 7L);
             gameInning.addNewPlateAppearanceBy(10L);
             inningRepository.save(gameInning);
         };

@@ -1,7 +1,7 @@
 package kr.codesquad.baseball.game.service;
 
 import kr.codesquad.baseball.game.controller.GameDTO;
-import kr.codesquad.baseball.game.domain.Game;
+import kr.codesquad.baseball.game.domain.GameWithoutInnings;
 import kr.codesquad.baseball.game.domain.GameRepository;
 import kr.codesquad.baseball.game.domain.GameStatus;
 import kr.codesquad.baseball.team.TeamDTO;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-class GameServiceTest {
+class GameWithoutInningsServiceTest {
 
     @Mock
     GameRepository gameRepository;
@@ -42,7 +42,7 @@ class GameServiceTest {
 
     @ParameterizedTest
     @MethodSource("readAllProvider")
-    void readAll(List<Game> gamesMockup, Team homeTeamMockup, Team awayTeamMockup, List<GameDTO> expected) {
+    void readAll(List<GameWithoutInnings> gamesMockup, Team homeTeamMockup, Team awayTeamMockup, List<GameDTO> expected) {
         when(gameRepository.findAll())
                 .thenReturn(gamesMockup);
 
@@ -60,7 +60,7 @@ class GameServiceTest {
         return Stream.of(
                 Arguments.of(
                         Arrays.asList(
-                                Game.create(1L, GameStatus.PLAYING, 1L, 2L)
+                                GameWithoutInnings.create(1L, GameStatus.PLAYING, 1L, 2L)
                         ),
                         Team.create(1L, "Captain"),
                         Team.create(2L, "Marvel"),
@@ -77,9 +77,9 @@ class GameServiceTest {
 
     @ParameterizedTest
     @MethodSource("readOneProvider")
-    void readOne(Game gameMockup, Team homeTeamMockup, Team awayTeamMockup, GameDTO expected) {
-        when(gameRepository.findGameById(1L))
-                .thenReturn(gameMockup);
+    void readOne(GameWithoutInnings gameWithoutInningsMockup, Team homeTeamMockup, Team awayTeamMockup, GameDTO expected) {
+        when(gameRepository.findGameWithoutInningsById(1L))
+                .thenReturn(gameWithoutInningsMockup);
 
         when(teamRepository.findTeamById(1L))
                 .thenReturn(homeTeamMockup);
@@ -94,7 +94,7 @@ class GameServiceTest {
     static Stream<Arguments> readOneProvider() {
         return Stream.of(
                 Arguments.of(
-                        Game.create(1L, GameStatus.PLAYING, 1L, 2L),
+                        GameWithoutInnings.create(1L, GameStatus.PLAYING, 1L, 2L),
                         Team.create(1L, "Captain"),
                         Team.create(2L, "Marvel"),
                         GameDTO.builder()

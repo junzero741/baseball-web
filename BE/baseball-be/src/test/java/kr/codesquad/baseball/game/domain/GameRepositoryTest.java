@@ -13,7 +13,7 @@ class GameRepositoryTest {
 
     @Test
     void save() {
-        Game game = new Game(GameStatus.PLAYING, new TeamParticipateGame(1L, 2L));
-        gameRepository.save(game);
+        GameWithoutInnings gameWithoutInnings = new GameWithoutInnings(GameStatus.PLAYING, new TeamParticipateGame(1L, 2L));
+        gameRepository.save(gameWithoutInnings);
     }
 }

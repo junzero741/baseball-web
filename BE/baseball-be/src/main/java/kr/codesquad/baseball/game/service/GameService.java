@@ -2,8 +2,9 @@ package kr.codesquad.baseball.game.service;
 
 import kr.codesquad.baseball.game.controller.GameDTO;
 import kr.codesquad.baseball.game.controller.GameScoresDTO;
-import kr.codesquad.baseball.game.domain.Game;
 import kr.codesquad.baseball.game.domain.GameRepository;
+import kr.codesquad.baseball.game.domain.GameWithInnings;
+import kr.codesquad.baseball.game.domain.GameWithoutInnings;
 import kr.codesquad.baseball.inning.domain.InningRepository;
 import kr.codesquad.baseball.team.TeamDTO;
 import kr.codesquad.baseball.team.domain.TeamRepository;
@@ -34,14 +35,14 @@ public class GameService {
     }
 
     public GameDTO readOne(long id) {
-        return gameToGameDTO(gameRepository.findGameById(id));
+        return gameToGameDTO(gameRepository.findGameWithoutInningsById(id));
     }
 
-    private GameDTO gameToGameDTO(Game game) {
+    private GameDTO gameToGameDTO(GameWithoutInnings gameWithoutInnings) {
         return GameDTO.builder()
-                .id(game)
-                .homeTeam(teamRepository.findTeamById(game.homeTeamId()))
-                .awayTeam(teamRepository.findTeamById(game.awayTeamId()))
+                .id(gameWithoutInnings)
+                .homeTeam(teamRepository.findTeamById(gameWithoutInnings.homeTeamId()))
+                .awayTeam(teamRepository.findTeamById(gameWithoutInnings.awayTeamId()))
                 .build();
     }
 
@@ -57,5 +58,14 @@ public class GameService {
         GameScoresDTO gameScoresDTO = new GameScoresDTO(homeTeam.withScores(homeTeamScores), awayTeam.withScores(awayTeamScores));
 
         return gameScoresDTO;
+    }
+
+    public int pitchCountOf(long gameId, long pitcherId) {
+        GameWithInnings gameWithInnings = gameRepository.findGameWithInningsById(gameId);
+
+        return gameWithInnings.getGameInnings().stream()
+                .map(gameInning -> gameInning.pitchCount(pitcherId))
+                .mapToInt(Integer::valueOf)
+                .sum();
     }
 }

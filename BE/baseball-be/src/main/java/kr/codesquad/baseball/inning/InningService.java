@@ -79,7 +79,7 @@ public class InningService {
                 .homeTeam(homeTeam)
                 .awayTeam(awayTeam)
                 .baseState(gameInning.getBaseState())
-                .currentPitcher(PlayerDTO.Pitcher.of(pitcher, gameInning.pitchCount()))
+                .currentPitcher(PlayerDTO.Pitcher.of(pitcher, gameService.pitchCountOf(gameId, pitcher.getId())))
                 .currentHitter(PlayerDTO.Hitter.of(hitter, currentHitterOrder, gameInning.currentHitterPlateAppearanceNumber(), hitCount))
                 .hitterRecords(hitterRecords)
                 .build();
@@ -107,7 +107,7 @@ public class InningService {
                         inningType == InningType.BOTTOM ? gameInning.getInning() + 1 : gameInning.getInning(),
                         gameId,
                         nextTeamId,
-                        nextTeamId == gameDTO.homeTeamId() ? 6L : 10L
+                        nextTeamId == gameDTO.homeTeamId() ? 7L : 10L
                 );
 
                 GameInning lastInning = inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc(gameId, nextTeamId);

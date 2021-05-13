@@ -1,6 +1,6 @@
 package kr.codesquad.baseball.game.controller;
 
-import kr.codesquad.baseball.game.domain.Game;
+import kr.codesquad.baseball.game.domain.GameWithoutInnings;
 import kr.codesquad.baseball.team.TeamDTO;
 import kr.codesquad.baseball.team.domain.Team;
 
@@ -17,8 +17,8 @@ public class GameDTO {
         this.awayTeam = awayTeam;
     }
 
-    public static GameDTO of(Game game, Team homeTeam, Team awayTeam) {
-        return new GameDTO(game.getId(), TeamDTO.from(homeTeam), TeamDTO.from(awayTeam));
+    public static GameDTO of(GameWithoutInnings gameWithoutInnings, Team homeTeam, Team awayTeam) {
+        return new GameDTO(gameWithoutInnings.getId(), TeamDTO.from(homeTeam), TeamDTO.from(awayTeam));
     }
 
     public static GameDTOBuilder builder() {
@@ -88,8 +88,8 @@ public class GameDTO {
             return this;
         }
 
-        public GameDTOBuilder id(Game game) {
-            this.id = game.getId();
+        public GameDTOBuilder id(GameWithoutInnings gameWithoutInnings) {
+            this.id = gameWithoutInnings.getId();
             return this;
         }
 

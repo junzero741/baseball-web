@@ -36,7 +36,14 @@ public class GameInning {
     }
 
     public int pitchCount() {
-        return currentPlateAppearance().pitchCount();
+        return pitchCount(pitcherId);
+    }
+
+    public int pitchCount(long pitcherId) {
+        return Math.toIntExact(plateAppearances.parallelStream()
+                .flatMap(plateAppearance -> plateAppearance.getPitches().stream())
+                .filter(pitch -> pitch.getPitcherId() == pitcherId)
+                .count());
     }
 
     public GameInning addNewPlateAppearanceBy(long hitterId) {
