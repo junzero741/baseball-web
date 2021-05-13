@@ -18,7 +18,6 @@ const RecordOfPlayer = ({ results }) => {
 	};
 
 	const finalResult = (result) => {
-		console.log(`strike: ${strikeCnt.current} ball: ${ballCnt.current}`);
 		if (ballCnt.current === 4) {
 			consequnece = getPlayerConsquence("FOUR_BALL");
 		} else if (strikeCnt.current === 3) {
@@ -33,7 +32,6 @@ const RecordOfPlayer = ({ results }) => {
 			S: "스트라이크",
 			H: "안타",
 		};
-		// result === "B" ? (ballCnt.current += 1) : (strikeCnt.current += 1);
 
 		if (result === "B") ballCnt.current += 1;
 		else if (result === "S") strikeCnt.current += 1;
