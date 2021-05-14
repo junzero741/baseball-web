@@ -63,21 +63,15 @@ const Field = ({ data, userTeam, fetchData }) => {
 	let timer = useRef(null);
 
 	useEffect(() => {
-		console.log("Polling trigged useEffect", isOffence);
 		const polling = () => {
 			if (isOffence)
 				timer.current = setTimeout(() => {
-					console.log("played in polling!!!");
 					play();
 					polling();
 				}, 3000);
 		};
 		polling();
-		const clearPolling = () => {
-			if (!isOffence) clearTimeout(timer.current);
-			if (!isOffence) console.log("clear!!!!!");
-		};
-		clearPolling();
+		if (!isOffence) clearTimeout(timer.current);
 	}, [isOffence]);
 
 	//prettier-ignore
