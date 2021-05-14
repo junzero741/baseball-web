@@ -20,7 +20,7 @@ const Count = ({ type, count }) => (
 	<StyledCount type={type}>
 		<CountTitle>{type[0]}</CountTitle>
 		<CountOn>{"●".repeat(count)}</CountOn>
-		<CountOff>{"●".repeat((type === "BALL" ? 3 : 2) - count)}</CountOff>
+		<CountOff>{"●".repeat((type === "BALL" ? 3 : 2) - count < 0 ? 0 : (type === "BALL" ? 3 : 2) - count)}</CountOff>
 	</StyledCount>
 );
 

@@ -39,7 +39,7 @@ const Player = ({ name, plateAppearanceCount, hitCount }) => (
 		<td>{plateAppearanceCount}</td>
 		<td>{hitCount}</td>
 		<td>{plateAppearanceCount - hitCount}</td>
-		<td>{makeDecimalPoint(hitCount / plateAppearanceCount, 3)}</td>
+		<td>{makeDecimalPoint(hitCount / (plateAppearanceCount ? plateAppearanceCount : 1), 3)}</td>
 	</tr>
 );
 
