@@ -57,3 +57,9 @@ PVP 플레이 등 확장성을 높여볼 계획입니다. <br/>
 
 ### 수비 화면
 ![수비](https://user-images.githubusercontent.com/70461368/118228333-f875ee00-b4c4-11eb-8912-029e88da816e.gif)
+
+## 데이터 구조
+
+### ERD
+
+![image](https://user-images.githubusercontent.com/24666330/118240006-6cb88d80-b4d5-11eb-8307-c7d950dccb94.png)
