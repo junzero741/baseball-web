@@ -1,2 +1,10 @@
-const makeDecimalPoint = (value, fix) => parseFloat(Math.round(value * (10 ^ fix)) / (10 ^ fix)).toFixed(fix);
+const makeDecimalPoint = (value, fix) => {
+	let result = (value + "")
+		.split("")
+		.slice(0, fix + 2)
+		.join("");
+	if (result === "0") result = "0.0";
+	while (result.length !== fix + 2) result += "0";
+	return result;
+};
 export default makeDecimalPoint;
