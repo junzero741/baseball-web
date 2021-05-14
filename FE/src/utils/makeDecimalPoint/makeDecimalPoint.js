@@ -3,7 +3,7 @@ const makeDecimalPoint = (value, fix) => {
 		.split("")
 		.slice(0, fix + 2)
 		.join("");
-	if (result === "0") result = "0.0";
+	if (result === "0" || result === "1") result += ".0";
 	while (result.length !== fix + 2) result += "0";
 	return result;
 };
