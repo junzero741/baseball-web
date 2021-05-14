@@ -49,4 +49,11 @@ PVP 플레이 등 확장성을 높여볼 계획입니다. <br/>
 
 <img width="1021" alt="005" src="https://user-images.githubusercontent.com/71166372/117403533-4a59c980-af43-11eb-8148-26a2632fbc30.png">
 
+### 로그인 화면
+![001](https://user-images.githubusercontent.com/70461368/118227666-e5165300-b4c3-11eb-84a4-a13ac84767e7.gif)
 
+### 공격 화면
+![002](https://user-images.githubusercontent.com/70461368/118228082-96b58400-b4c4-11eb-824a-f50ed120a3fb.gif)
+
+### 수비 화면
+![수비](https://user-images.githubusercontent.com/70461368/118228333-f875ee00-b4c4-11eb-8912-029e88da816e.gif)
