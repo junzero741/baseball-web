@@ -200,4 +200,32 @@ public class SampleDataFactory {
                 new Player("한양범")
         );
     }
+
+    public static List<Player> backendPlayers() {
+        return Arrays.asList(
+                new Player("호눅스"),
+                new Player("프레디"),
+                new Player("우디"),
+                new Player("비비"),
+                new Player("봉프"),
+                new Player("노을"),
+                new Player("동"),
+                new Player("새리"),
+                new Player("스타브")
+        );
+    }
+
+    public static List<Player> frontend() {
+        return Arrays.asList(
+                new Player("크롱"),
+                new Player("성"),
+                new Player("구디"),
+                new Player("디디"),
+                new Player("루크"),
+                new Player("펭돌이"),
+                new Player("라노"),
+                new Player("네이스"),
+                new Player("디코")
+        );
+    }
 }

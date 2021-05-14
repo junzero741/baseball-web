@@ -1,8 +1,8 @@
 package kr.codesquad.baseball.utils;
 
-import kr.codesquad.baseball.game.domain.GameWithoutInnings;
 import kr.codesquad.baseball.game.domain.GameRepository;
 import kr.codesquad.baseball.game.domain.GameStatus;
+import kr.codesquad.baseball.game.domain.GameWithoutInnings;
 import kr.codesquad.baseball.game.domain.TeamParticipateGame;
 import kr.codesquad.baseball.inning.domain.GameInning;
 import kr.codesquad.baseball.inning.domain.InningRepository;
@@ -12,6 +12,7 @@ import kr.codesquad.baseball.team.domain.Team;
 import kr.codesquad.baseball.team.domain.TeamRepository;
 import kr.codesquad.baseball.user.User;
 import kr.codesquad.baseball.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,11 +21,22 @@ import org.springframework.core.annotation.Order;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 @Configuration
 public class SampleDataRunner {
+
+    @Autowired
+    TeamRepository teamRepository;
+
+    @Autowired
+    PlayerRepository playerRepository;
+
+    @Autowired
+    GameRepository gameRepository;
+
+    @Autowired
+    InningRepository inningRepository;
+
     @Bean
     @Order(10)
     public ApplicationRunner saveUser(UserRepository userRepository) {
@@ -49,35 +61,56 @@ public class SampleDataRunner {
 
     @Bean
     @Order(20)
-    public ApplicationRunner saveTeam(TeamRepository teamRepository, PlayerRepository playerRepository) {
+    public ApplicationRunner saveTeam() {
         return args -> {
-            Team captain = new Team("Captain");
-            captain.addPlayers(playerRepository.findAllById(LongStream.range(1, 10).boxed().collect(Collectors.toList())));
+            saveTeam(SampleDataFactory.backendPlayers(), "Backend");
+            saveTeam(SampleDataFactory.frontend(), "Frontend");
 
-            Team marvel = new Team("Marvel");
-            marvel.addPlayers(playerRepository.findAllById(LongStream.range(10, 19).boxed().collect(Collectors.toList())));
+            saveTeam(SampleDataFactory.players(), "Codesquad");
+            saveTeam(SampleDataFactory.players(), "WoowahanTechCourse");
+            saveTeam(SampleDataFactory.players(), "Naver");
+            saveTeam(SampleDataFactory.players(), "Kakao");
+            saveTeam(SampleDataFactory.players(), "Line");
+            saveTeam(SampleDataFactory.players(), "Coopang");
+            saveTeam(SampleDataFactory.players(), "NHN");
+            saveTeam(SampleDataFactory.players(), "SKT");
+            saveTeam(SampleDataFactory.players(), "KT");
+            saveTeam(SampleDataFactory.players(), "LGT");
 
-            teamRepository.saveAll(new ArrayList<>(
-                    Arrays.asList(
-                            captain,
-                            marvel
-                    )
-            ));
         };
+    }
+
+    private void saveTeam(List<Player> players, String teamName) {
+        playerRepository.saveAll(players);
+        Team team = new Team(teamName);
+        team.addPlayers(players);
+        teamRepository.save(team);
+
     }
 
     @Bean
     @Order(30)
-    public ApplicationRunner saveGame(GameRepository gameRepository, InningRepository inningRepository) {
+    public ApplicationRunner saveGame() {
         return args -> {
-            GameWithoutInnings gameWithoutInnings = new GameWithoutInnings(GameStatus.PLAYING, new TeamParticipateGame(1L, 2L));
+            saveGame(1L, 2L);
+            saveGame(3L, 4L);
+            saveGame(5L, 6L);
+            saveGame(7L, 8L);
+            saveGame(9L, 10L);
+            saveGame(11L, 12L);
 
-            gameRepository.save(gameWithoutInnings);
-
-            // 게임 초기화 시 이닝도 함께 초기회돼야 함.
-            GameInning gameInning = new GameInning(1, gameWithoutInnings.getId(), gameWithoutInnings.homeTeamId(), 7L);
-            gameInning.addNewPlateAppearanceBy(10L);
-            inningRepository.save(gameInning);
         };
+    }
+
+    private void saveGame(long homeTeamId, long awayTeamId) {
+        GameWithoutInnings gameWithoutInnings = new GameWithoutInnings(GameStatus.PLAYING, new TeamParticipateGame(homeTeamId, awayTeamId));
+        Team homeTeam = teamRepository.findTeamById(homeTeamId);
+        Team awayTeam = teamRepository.findTeamById(awayTeamId);
+
+        gameRepository.save(gameWithoutInnings);
+
+        GameInning gameInning = new GameInning(1, gameWithoutInnings.getId(), gameWithoutInnings.homeTeamId(), homeTeam.getPlayers().get(0).getPlayerId());
+        gameInning.addNewPlateAppearanceBy(awayTeam.getPlayers().get(0).getPlayerId());
+        inningRepository.save(gameInning);
     }
 }

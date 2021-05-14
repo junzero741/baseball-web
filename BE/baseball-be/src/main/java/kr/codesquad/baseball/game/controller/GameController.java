@@ -21,7 +21,7 @@ public class GameController {
 
     @GetMapping("/games")
     public List<GameDTO> readAll() {
-        return SampleDataFactory.gameReadAllResponses();
+        return gameService.readAll();
     }
 
     @GetMapping("/games/{id}/lineup")

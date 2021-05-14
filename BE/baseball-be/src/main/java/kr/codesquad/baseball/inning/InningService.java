@@ -109,19 +109,25 @@ public class InningService {
             if (gameInning.getPlateAppearances().stream().filter(plateAppearance -> plateAppearance.isOut()).count() == 3) {
                 long nextTeamId = gameDTO.homeTeamId() == teamId ? gameDTO.awayTeamId() : gameDTO.homeTeamId();
 
+                Team homeTeam = teamRepository.findTeamById(gameDTO.homeTeamId());
+                Team awayTeam = teamRepository.findTeamById(gameDTO.awayTeamId());
+
                 GameInning nextInning = new GameInning(
                         inningType == InningType.BOTTOM ? gameInning.getInning() + 1 : gameInning.getInning(),
                         gameId,
                         nextTeamId,
-                        nextTeamId == gameDTO.homeTeamId() ? 7L : 10L
+                        nextTeamId == gameDTO.homeTeamId() ? homeTeam.getPlayers().get(0).getPlayerId() : awayTeam.getPlayers().get(0).getPlayerId()
                 );
 
                 GameInning lastInning = inningRepository.findTopByGameIdAndTeamIdOrderByInningDesc(gameId, nextTeamId);
 
+                Team nextTeam = teamRepository.findTeamById(nextTeamId);
+                Team currentTeam = teamRepository.findTeamById(teamId);
+
                 if (lastInning == null) {
                     //TODO: 누가 투수인지 확인 필요
                     //TODO: save가 여기서 이뤄지면 안 됨
-                    inningRepository.save(new GameInning(1, gameId, nextTeamId, 10L).addNewPlateAppearanceBy(1L));
+                    inningRepository.save(new GameInning(1, gameId, nextTeamId, nextTeam.getPlayers().get(0).getPlayerId()).addNewPlateAppearanceBy(currentTeam.getPlayers().get(0).getPlayerId()));
                     return readOne(gameId, nextTeamId);
                 }
 
