@@ -1,8 +1,5 @@
-# Ah-puh
+# Baseball Game Online
 
-#### codesquad team project week3
-
-### Baseball Game Online
 ## 팀원
 - Freddy ✊
 - Goody 🗝
